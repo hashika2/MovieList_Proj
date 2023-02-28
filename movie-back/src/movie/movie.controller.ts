@@ -1,8 +1,17 @@
-import { Body, Controller, Delete, Post, Query } from '@nestjs/common';
-import { ApiQuery } from '@nestjs/swagger';
+import {
+  Body,
+  Controller,
+  Delete,
+  Post,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
+import { ApiBearerAuth, ApiQuery } from '@nestjs/swagger';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { MoviewDTO } from './movie.model';
 import { MovieService } from './movie.service';
 
+@UseGuards(JwtAuthGuard)
 @Controller('movie')
 export class MovieController {
   constructor(private movieService: MovieService) {}
