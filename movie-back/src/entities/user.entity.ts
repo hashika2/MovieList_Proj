@@ -1,5 +1,12 @@
-import { Entity, Column, PrimaryGeneratedColumn, BeforeInsert } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  BeforeInsert,
+  OneToMany,
+} from 'typeorm';
 import * as bcrypt from 'bcrypt';
+import { Movie } from './movie.entity';
 
 @Entity()
 export class User {
@@ -44,4 +51,7 @@ export class User {
     default: false,
   })
   isActive: boolean;
+
+  @OneToMany(() => Movie, (movie) => movie.user)
+  movies: Movie[];
 }

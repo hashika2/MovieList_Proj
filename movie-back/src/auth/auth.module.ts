@@ -20,4 +20,4 @@ import { jwtConstants } from './constant';
   controllers: [AuthController],
   exports: [TypeOrmModule],
 })
-export class AuthModule { }
+export class AuthModule {}

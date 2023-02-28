@@ -7,6 +7,9 @@ import { AuthModule } from './auth/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import entities from './entities';
 import { JwtService } from '@nestjs/jwt/dist';
+import { MovieController } from './movie/movie.controller';
+import { MovieService } from './movie/movie.service';
+import { MovieModule } from './movie/movie.module';
 
 @Module({
   imports: [
@@ -21,8 +24,9 @@ import { JwtService } from '@nestjs/jwt/dist';
       synchronize: true,
     }),
     AuthModule,
+    MovieModule,
   ],
-  controllers: [AppController, AuthController],
-  providers: [AppService, AuthService, JwtService],
+  controllers: [AppController, AuthController, MovieController],
+  providers: [AppService, AuthService, JwtService, MovieService],
 })
 export class AppModule {}
