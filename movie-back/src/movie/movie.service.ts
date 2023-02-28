@@ -13,4 +13,11 @@ export class MovieService {
   async add(movie): Promise<Movie[]> {
     return await this.movieRepository.save(movie);
   }
+
+  async remove(params): Promise<any> {
+    return await this.movieRepository.delete({
+      userId: params.userId,
+      movieId: params.movieId,
+    });
+  }
 }

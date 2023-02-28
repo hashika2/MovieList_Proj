@@ -1,4 +1,5 @@
-import { Body, Controller, Delete, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Post, Query } from '@nestjs/common';
+import { ApiQuery } from '@nestjs/swagger';
 import { MoviewDTO } from './movie.model';
 import { MovieService } from './movie.service';
 
@@ -12,7 +13,17 @@ export class MovieController {
   }
 
   @Delete('/remove')
-  async remove(@Body() movie: MoviewDTO): Promise<any> {
-    return this.movieService.add(movie);
+  @ApiQuery({
+    name: 'userId',
+    required: true,
+    type: String,
+  })
+  @ApiQuery({
+    name: 'movieId',
+    required: true,
+    type: String,
+  })
+  async remove(@Query() params: any): Promise<any> {
+    return this.movieService.remove(params);
   }
 }
