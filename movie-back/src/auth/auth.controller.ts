@@ -13,6 +13,6 @@ export class AuthController {
 
   @Post('signin')
   async login(@Body() loginDTO: LoginDTO): Promise<any> {
-    return this.authService.findAll();
+    return this.authService.login(loginDTO);
   }
 }
