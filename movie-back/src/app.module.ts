@@ -5,6 +5,7 @@ import { AuthController } from './auth/auth.controller';
 import { AuthService } from './auth/auth.service';
 import { AuthModule } from './auth/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import entities from './entities';
 
 @Module({
   imports: [
@@ -15,7 +16,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       username: 'root',
       password: 'admin',
       database: 'movie',
-      entities: [__dirname + '/../**/*.entity{.ts,.js}'],
+      entities: entities,
       synchronize: true,
     }),
     AuthModule,
