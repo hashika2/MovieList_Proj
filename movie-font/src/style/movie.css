@@ -13,3 +13,8 @@
   width: 30px;
   height: 30px;
 }
+
+.movie-item {
+  text-decoration: none;
+  color: black;
+}

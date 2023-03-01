@@ -1,21 +1,22 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { Link } from "react-router-dom";
 import "../../style/movie.css";
+import { getuPularMovie } from "../../api/filterApi";
 
 const MovieCard = (info) => {
   const [movies, setMovies] = useState([]);
 
   useEffect(() => {
     getMovieDatails();
-  }, []);
+  }, [info.length]);
 
   const getMovieDatails = async () => {
-    const res = await axios.get(
-      `${process.env.REACT_APP_REST_API_BASE_URL}/3/movie/popular?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=${info.page}`
-    );
-    setMovies(res.data?.results);
-    console.log(res.data.results);
+    if (info.length == 0) {
+      const res = await getuPularMovie(info.page);
+      setMovies(res.data?.results);
+    } else {
+      setMovies(info.movies);
+    }
   };
 
   return (
@@ -24,7 +25,7 @@ const MovieCard = (info) => {
       {movies.map((mv, key) => {
         return (
           <div className="movie-card card ml-2" key={key}>
-            <Link to={`/movie/${mv.id}`}>
+            <Link to={`/movie/${mv.id}`} className="movie-item">
               <img
                 className="card-img-top"
                 src="https://www.themoviedb.org/t/p/w220_and_h330_face/130H1gap9lFfiTF9iDrqNIkFvC9.jpg"
