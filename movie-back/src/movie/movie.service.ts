@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Movie } from 'src/entities';
 import { Repository } from 'typeorm';
@@ -8,9 +8,16 @@ export class MovieService {
   constructor(
     @InjectRepository(Movie)
     private movieRepository: Repository<Movie>,
-  ) {}
+  ) { }
 
   async add(movie): Promise<Movie[]> {
+    const { movieId, userId } = movie;
+    const existMovie = await this.movieRepository.findOne({
+      where: { movieId, userId },
+    });
+    if (existMovie) {
+      throw new HttpException('Movie already exist', HttpStatus.BAD_REQUEST);
+    }
     return await this.movieRepository.save(movie);
   }
 
