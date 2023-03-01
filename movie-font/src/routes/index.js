@@ -27,7 +27,6 @@ export default function Router() {
     {
       path: "/home",
       element: <MovieList />,
-      children: [{ path: "movie", element: <Movie /> }],
     },
     {
       path: "/movie/:id",
