@@ -1,3 +1,15 @@
 .movie-card {
-  width: 18rem;
+  width: 14rem;
+  margin-left: 30px;
+  margin-bottom: 10px;
+}
+
+.movie {
+  text-align: left;
+}
+
+.movie button {
+  color: brown;
+  width: 30px;
+  height: 30px;
 }

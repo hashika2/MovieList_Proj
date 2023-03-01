@@ -1,7 +1,9 @@
 import Header from "../header/Header";
 import MovieCard from "./movieCard";
+import React, { useEffect, useState } from "react";
 
 const MovieList = () => {
+  const [page, setPage] = useState(1);
   return (
     <div>
       <Header />
@@ -114,7 +116,7 @@ const MovieList = () => {
             </div>
           </div>
         </div>
-        <MovieCard />
+        <MovieCard page={page} />
       </div>
     </div>
   );
