@@ -2,8 +2,8 @@ import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
-  OneToMany,
   ManyToOne,
+  JoinColumn,
 } from 'typeorm';
 import { User } from './user.entity';
 
@@ -30,8 +30,9 @@ export class Movie {
     name: 'userId',
     nullable: false,
   })
-  userId: string;
+  userId: number;
 
   @ManyToOne(() => User, (user) => user.movies)
+  @JoinColumn([{ name: 'userId', referencedColumnName: 'id' }])
   user: User;
 }
