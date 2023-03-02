@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import Notiflix from "notiflix";
+import { BsBookmark } from "react-icons/bs";
 import { addMovie } from "../../redux/action";
 import { getUserId } from "../../api/userApi";
 
@@ -46,9 +47,8 @@ const Movie = () => {
       );
       setIsAdd(true);
       dispatch(addMovie(res.data));
-      console.log(res);
     } catch (err) {
-      Notiflix.Notify.failure("There is some issue");
+      Notiflix.Notify.failure("Already added to wishlist");
       // setIsAdd(false);
     }
   };
@@ -70,12 +70,13 @@ const Movie = () => {
                 <button
                   data-toggle="modal"
                   style={{
-                    backgroundColor: isAdd ? "orange" : "white",
                     float: "right",
                   }}
                   onClick={addWishList}
                 >
-                  <span class="glyphicon glyphicon-bookmark"></span>
+                  <BsBookmark
+                    style={{ backgroundColor: isAdd ? "orange" : "white" }}
+                  />
                 </button>
                 <h2 className="card-title">{movie.title}</h2>
                 <p className="card-text">{movie.release_date}(US)</p>

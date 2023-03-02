@@ -6,10 +6,11 @@ import Login from "../components/authentication/Login";
 export default function AuthGuard({ children }) {
   const currentUser = useSelector((state) => state.auth);
   const { isAuthenticated } = currentUser;
+  const isAuth = localStorage.getItem("isAuthenticated");
   const { pathname } = useLocation();
   const [requestedLocation, setRequestedLocation] = useState("");
 
-  if (!isAuthenticated) {
+  if (!isAuth) {
     if (pathname !== requestedLocation) {
       setRequestedLocation(pathname);
     }

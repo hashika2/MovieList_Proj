@@ -10,6 +10,10 @@ export default function Router() {
   return useRoutes([
     {
       path: "/",
+      element: <MovieList />,
+    },
+    {
+      path: "/",
       children: [
         {
           path: "login",
@@ -17,10 +21,6 @@ export default function Router() {
         },
         { path: "register", element: <Register /> },
       ],
-    },
-    {
-      path: "/home",
-      element: <MovieList />,
     },
     {
       path: "/movie/:id",

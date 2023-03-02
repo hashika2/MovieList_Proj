@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { BsFillTrashFill } from "react-icons/bs";
 import { getUserId } from "../../api/userApi";
 import Header from "../header/Header";
 
@@ -77,7 +78,7 @@ const WishListMovie = () => {
                     className="btn btn-danger mt-4"
                     onClick={() => removeMovie(wish.movieId)}
                   >
-                    delete
+                    <BsFillTrashFill />
                   </button>
                 </div>
               </div>
