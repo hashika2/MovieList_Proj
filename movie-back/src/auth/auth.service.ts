@@ -41,7 +41,7 @@ export class AuthService {
     }
 
     if (await bcrypt.compare(password, user.password)) {
-      const payload = { sub: user.id };
+      const payload = { id: user.id };
       return {
         access_token: this.jwtService.sign(payload, {
           secret: jwtConstants.secret,
@@ -57,5 +57,12 @@ export class AuthService {
         HttpStatus.UNAUTHORIZED,
       );
     }
+  }
+
+  async getuserId(request): Promise<any> {
+    const jwt = request.headers.authorization.replace('Bearer ', '');
+    const json = this.jwtService.decode(jwt, { json: true });
+    console.log(json);
+    return json;
   }
 }
