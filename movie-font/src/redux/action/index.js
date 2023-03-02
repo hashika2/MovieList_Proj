@@ -11,3 +11,17 @@ export const registerUser = (userObj) => {
     payload: userObj,
   };
 };
+
+export const addMovie = (movieObj) => {
+  return {
+    type: "MOVIE_ADDED",
+    payload: movieObj,
+  };
+};
+
+export const removeMovie = (movieObj) => {
+  return {
+    type: "MOVIE_REMOVED",
+    payload: movieObj,
+  };
+};
