@@ -20,6 +20,8 @@ const Login = () => {
         password,
       }
     );
+    localStorage.setItem("token", logingData.data.access_token);
+    localStorage.setItem("isAuthenticated", currentUser.isAuthenticated);
     dispatch(loginUser(logingData.data));
   };
 
