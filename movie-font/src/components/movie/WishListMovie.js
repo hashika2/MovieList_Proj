@@ -58,16 +58,23 @@ const WishListMovie = () => {
           return (
             <div class="card w-100 mt-2" key={key}>
               <div className="row">
-                <div className="col-md-2">1</div>
+                <div className="col-md-2">
+                  <input
+                    class="form-check-input mt-4"
+                    type="checkbox"
+                    value=""
+                    id="flexCheckDefault"
+                  />
+                </div>
                 <div className="col-md-3">
                   <img src={wish.imgUrl} width={70} style={{ padding: 10 }} />
                 </div>
                 <div className="col-md-6">
-                  <p>{wish.name}</p>
+                  <p className="mt-4">{wish.name}</p>
                 </div>
                 <div className="col-md-1">
                   <button
-                    className="btn btn-danger"
+                    className="btn btn-danger mt-4"
                     onClick={() => removeMovie(wish.movieId)}
                   >
                     delete
