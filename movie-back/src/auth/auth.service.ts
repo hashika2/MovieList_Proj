@@ -62,7 +62,6 @@ export class AuthService {
   async getuserId(request): Promise<any> {
     const jwt = request.headers.authorization.replace('Bearer ', '');
     const json = this.jwtService.decode(jwt, { json: true });
-    console.log(json);
     return json;
   }
 }

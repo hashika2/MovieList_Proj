@@ -1,30 +1,34 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { getUserId } from "../../api/userApi";
 import Header from "../header/Header";
 
 const WishListMovie = () => {
   const [wishlist, setWishlist] = useState([]);
+  const [userId, setUserId] = useState("");
+  const [movieId, setMovieId] = useState("");
   const currentUser = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
+    console.log("**********");
     fetchWishlistMovie();
-  }, []);
+  }, [movieId]);
 
   const fetchWishlistMovie = async () => {
-    const token = localStorage.getItem("token");
+    const userData = await getUserId();
+    setUserId(userData.data.id);
     try {
       const wishlistMovies = await axios.get(
-        `${process.env.REACT_APP_API_BASE_URL}/movie/6`,
+        `${process.env.REACT_APP_API_BASE_URL}/movie/${userData.data.id}`,
         {
           headers: {
-            Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsImlhdCI6MTY3NzU5NzkyMX0.rWv-a7Wamk5J3YMvopYl3nMJfz5yz3T4R4mNwNRjH4M",
+            Authorization: `Bearer ${token}`,
           },
         }
       );
-      console.log(wishlistMovies.data);
       setWishlist(wishlistMovies.data);
     } catch (err) {}
   };
@@ -32,17 +36,16 @@ const WishListMovie = () => {
   const removeMovie = async (id) => {
     try {
       const deleteMovie = await axios.delete(
-        `${process.env.REACT_APP_API_BASE_URL}/movie/remove?userId=${currentUser.data.userId}&movieId=${id}`,
+        `${process.env.REACT_APP_API_BASE_URL}/movie/remove?userId=${userId}&movieId=${id}`,
         {
           headers: {
-            Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsImlhdCI6MTY3NzU5NzkyMX0.rWv-a7Wamk5J3YMvopYl3nMJfz5yz3T4R4mNwNRjH4M",
+            Authorization: `Bearer ${token}`,
           },
         }
       );
-      fetchWishlistMovie();
-      dispatch(removeMovie("The item is removed"));
-      console.log(deleteMovie.data);
+      // fetchWishlistMovie();
+      setMovieId(id);
+      // dispatch(removeMovie("The item is removed"));
     } catch (err) {}
   };
   return (
@@ -50,6 +53,7 @@ const WishListMovie = () => {
       <Header />
       <h1>WishList</h1>
       <div className="container">
+        {wishlist.length == 0 && <div>Empty</div>}
         {wishlist.map((wish, key) => {
           return (
             <div class="card w-100 mt-2" key={key}>
