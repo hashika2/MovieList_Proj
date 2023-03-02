@@ -34,7 +34,7 @@ const Login = () => {
       "isAuthenticated",
       JSON.stringify(currentUser.isAuthenticated)
     );
-    navigate("/home");
+    navigate("/");
   }
 
   return (

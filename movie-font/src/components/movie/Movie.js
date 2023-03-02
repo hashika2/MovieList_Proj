@@ -47,7 +47,9 @@ const Movie = () => {
       );
       setIsAdd(true);
       dispatch(addMovie(res.data));
+      Notiflix.Notify.success("Added to wishlist");
     } catch (err) {
+      //error dispatch
       Notiflix.Notify.failure("Already added to wishlist");
       // setIsAdd(false);
     }

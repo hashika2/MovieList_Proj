@@ -13,10 +13,10 @@ const Header = () => {
         <Link className="navbar-brand" to="/">
           My Movie App
         </Link>
-        {isAuth === "true" ? (
+        {isAuth ? (
           <div class="dropdown">
             <button
-              class="btn btn-secondary dropdown-toggle"
+              class="btn btn-primary dropdown-toggle"
               type="button"
               id="dropdownMenuButton"
               data-toggle="dropdown"
