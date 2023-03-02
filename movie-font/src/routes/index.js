@@ -4,13 +4,7 @@ import WishListMovie from "../components/movie/WishListMovie";
 import { Navigate, useLocation, useRoutes } from "react-router-dom";
 import MovieList from "../components/movie/MovieList";
 import Movie from "../components/movie/Movie";
-
-const authProtectedRoutes = [{ path: "/wishlist", component: WishListMovie }];
-
-const publicRoutes = [
-  { path: "/login", component: Login },
-  { path: "/register", component: Register },
-];
+import AuthGuard from "../guards/AuthGuard";
 
 export default function Router() {
   return useRoutes([
@@ -31,6 +25,14 @@ export default function Router() {
     {
       path: "/movie/:id",
       element: <Movie />,
+    },
+    {
+      path: "/wishlist",
+      element: (
+        <AuthGuard>
+          <WishListMovie />
+        </AuthGuard>
+      ),
     },
   ]);
 }

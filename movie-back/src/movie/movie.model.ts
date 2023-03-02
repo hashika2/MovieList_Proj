@@ -13,4 +13,8 @@ export class MoviewDTO {
   @ApiProperty()
   @IsNotEmpty()
   userId: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  imgUrl: string;
 }

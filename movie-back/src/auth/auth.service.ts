@@ -13,7 +13,7 @@ export class AuthService {
     @InjectRepository(User)
     private usersRepository: Repository<User>,
     private jwtService: JwtService,
-  ) {}
+  ) { }
 
   async findAll(): Promise<User[]> {
     return this.usersRepository.find();
@@ -41,11 +41,13 @@ export class AuthService {
     }
 
     if (await bcrypt.compare(password, user.password)) {
-      const payload = { sub: user.id };
+      const payload = { id: user.id };
       return {
         access_token: this.jwtService.sign(payload, {
           secret: jwtConstants.secret,
         }),
+        userId: user.id,
+        username: user.firstName,
         type: 'Bearer',
         expiresIn: '7200s',
       };
@@ -55,5 +57,11 @@ export class AuthService {
         HttpStatus.UNAUTHORIZED,
       );
     }
+  }
+
+  async getuserId(request): Promise<any> {
+    const jwt = request.headers.authorization.replace('Bearer ', '');
+    const json = this.jwtService.decode(jwt, { json: true });
+    return json;
   }
 }

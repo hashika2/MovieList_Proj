@@ -2,6 +2,8 @@ import {
   Body,
   Controller,
   Delete,
+  Get,
+  Param,
   Post,
   Query,
   UseGuards,
@@ -14,7 +16,12 @@ import { MovieService } from './movie.service';
 @UseGuards(JwtAuthGuard)
 @Controller('movie')
 export class MovieController {
-  constructor(private movieService: MovieService) {}
+  constructor(private movieService: MovieService) { }
+
+  @Get(':id')
+  async get(@Param('id') id: string): Promise<any> {
+    return this.movieService.get(id);
+  }
 
   @Post('/add')
   async add(@Body() movie: MoviewDTO): Promise<any> {

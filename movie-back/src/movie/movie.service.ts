@@ -27,4 +27,11 @@ export class MovieService {
       movieId: params.movieId,
     });
   }
+
+  async get(userId): Promise<Movie[]> {
+    const movies = await this.movieRepository.find({
+      where: { userId },
+    });
+    return movies;
+  }
 }
