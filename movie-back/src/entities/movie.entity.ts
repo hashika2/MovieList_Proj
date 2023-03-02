@@ -27,6 +27,13 @@ export class Movie {
   name: string;
 
   @Column({
+    name: 'imgUrl',
+    nullable: true,
+    default: '',
+  })
+  imgUrl: string;
+
+  @Column({
     name: 'userId',
     nullable: false,
   })

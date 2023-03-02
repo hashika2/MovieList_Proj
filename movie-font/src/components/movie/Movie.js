@@ -10,6 +10,7 @@ const Movie = () => {
   const [movie, setMovie] = useState("");
   const [isAdd, setIsAdd] = useState(false);
   const dispatch = useDispatch();
+  const currentUser = useSelector((state) => state.auth);
 
   useEffect(() => {
     getMovieDetails();
@@ -23,13 +24,14 @@ const Movie = () => {
   };
 
   const addWishList = async () => {
+    console.log(currentUser.data.userId);
     try {
       const res = await axios.post(
         `${process.env.REACT_APP_API_BASE_URL}/movie/add`,
         {
           movieId: movie.id,
           name: movie.title,
-          userId: id,
+          userId: currentUser.data.userId,
           imgUrl:
             "https://www.themoviedb.org/t/p/w220_and_h330_face/130H1gap9lFfiTF9iDrqNIkFvC9.jpg",
         },
