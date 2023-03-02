@@ -3,7 +3,10 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
+import Notiflix from "notiflix";
+import { BsBookmark } from "react-icons/bs";
 import { addMovie } from "../../redux/action";
+import { getUserId } from "../../api/userApi";
 
 const Movie = () => {
   const { id } = useParams();
@@ -11,6 +14,7 @@ const Movie = () => {
   const [isAdd, setIsAdd] = useState(false);
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.auth);
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
     getMovieDetails();
@@ -24,29 +28,30 @@ const Movie = () => {
   };
 
   const addWishList = async () => {
-    console.log(currentUser.data.userId);
+    const userData = await getUserId();
     try {
       const res = await axios.post(
         `${process.env.REACT_APP_API_BASE_URL}/movie/add`,
         {
           movieId: movie.id,
           name: movie.title,
-          userId: currentUser.data.userId,
+          userId: userData.data.id,
           imgUrl:
             "https://www.themoviedb.org/t/p/w220_and_h330_face/130H1gap9lFfiTF9iDrqNIkFvC9.jpg",
         },
         {
           headers: {
-            Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsImlhdCI6MTY3NzU5NzkyMX0.rWv-a7Wamk5J3YMvopYl3nMJfz5yz3T4R4mNwNRjH4M",
+            Authorization: `Bearer ${token}`,
           },
         }
       );
       setIsAdd(true);
       dispatch(addMovie(res.data));
-      console.log(res);
+      Notiflix.Notify.success("Added to wishlist");
     } catch (err) {
-      setIsAdd(false);
+      //error dispatch
+      Notiflix.Notify.failure("Already added to wishlist");
+      // setIsAdd(false);
     }
   };
   return (
@@ -67,12 +72,13 @@ const Movie = () => {
                 <button
                   data-toggle="modal"
                   style={{
-                    backgroundColor: isAdd ? "orange" : "white",
                     float: "right",
                   }}
                   onClick={addWishList}
                 >
-                  <span class="glyphicon glyphicon-bookmark"></span>
+                  <BsBookmark
+                    style={{ backgroundColor: isAdd ? "orange" : "white" }}
+                  />
                 </button>
                 <h2 className="card-title">{movie.title}</h2>
                 <p className="card-text">{movie.release_date}(US)</p>

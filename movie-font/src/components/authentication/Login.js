@@ -13,21 +13,28 @@ const Login = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    const logingData = await axios.post(
-      `${process.env.REACT_APP_API_BASE_URL}/auth/signin`,
-      {
-        email,
-        password,
+    try {
+      const logingData = await axios.post(
+        `${process.env.REACT_APP_API_BASE_URL}/auth/signin`,
+        {
+          email,
+          password,
+        }
+      );
+      if (logingData) {
+        localStorage.setItem("token", logingData.data.access_token);
+        dispatch(loginUser(logingData.data));
       }
-    );
-    localStorage.setItem("token", logingData.data.access_token);
-    localStorage.setItem("isAuthenticated", currentUser.isAuthenticated);
-    dispatch(loginUser(logingData.data));
+    } catch (err) {}
   };
 
   //need to change
   if (currentUser.isAuthenticated) {
-    navigate("/home");
+    localStorage.setItem(
+      "isAuthenticated",
+      JSON.stringify(currentUser.isAuthenticated)
+    );
+    navigate("/");
   }
 
   return (
