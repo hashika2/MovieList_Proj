@@ -2,22 +2,26 @@ import Header from "../header/Header";
 import MovieCard from "./movieCard";
 import React, { useEffect, useState } from "react";
 import { getGenres, getRating, searchMovie } from "../../api/filterApi";
+import Pagination from "react-bootstrap/Pagination";
 
 const MovieList = () => {
   const [page, setPage] = useState(1);
-  const [genreses, setGenres] = useState([]);
+  const [genreses, setGenreses] = useState([]);
+  const [genres, setGenres] = useState([]);
   const [ratings, setRating] = useState([]);
   const [movie, setMovie] = useState("");
   const [movies, setMovies] = useState([]);
+  const [isChange, setIsChange] = useState(false);
 
   useEffect(() => {
     fetchGenres();
-    fetchRatingMovie();
-  }, []);
+    // fetchRatingMovie();
+    searchFilterData();
+  }, [genres]);
 
   const fetchGenres = async () => {
     const genRes = await getGenres();
-    setGenres(genRes.data?.genres);
+    setGenreses(genRes.data?.genres);
   };
 
   const fetchRatingMovie = async () => {
@@ -28,9 +32,27 @@ const MovieList = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    const searchRes = await searchMovie(movie, page);
-    setMovies(searchRes.data?.results);
+    searchFilterData();
   };
+
+  const searchFilterData = async () => {
+    const searchRes = await searchMovie(movie, page);
+    console.log(searchRes);
+    setMovies(searchRes.data?.results);
+    setPage(searchRes.data?.total_pages);
+    setPageNumber();
+  };
+  let active = 2;
+  let items = [];
+  for (let number = 1; number <= movies.length; number++) {
+    items.push(
+      <Pagination.Item key={number} active={number === active}>
+        {number}
+      </Pagination.Item>
+    );
+  }
+  const setPageNumber = () => {};
+
   return (
     <div>
       <Header />
@@ -72,9 +94,15 @@ const MovieList = () => {
                   >
                     {genreses.map((genres, key) => {
                       return (
-                        <a class="dropdown-item" href="#">
+                        <button
+                          class="dropdown-item"
+                          onClick={() => {
+                            setGenres(genres.name);
+                            setMovie(genres.name);
+                          }}
+                        >
                           {genres.name}
-                        </a>
+                        </button>
                       );
                     })}
                   </div>
@@ -83,6 +111,8 @@ const MovieList = () => {
                   type="text"
                   class="form-control"
                   aria-label="Text input with dropdown button"
+                  value={genres}
+                  name="genres"
                 />
               </div>
             </div>
@@ -149,7 +179,11 @@ const MovieList = () => {
             </div>
           </div>
         </form>
-        <MovieCard page={page} movies={movies} length={movies.length} />
+        <MovieCard page={page} movies={movies} inputMovie={movie} />
+        <div>
+          <Pagination>{items}</Pagination>
+          <br />
+        </div>
       </div>
     </div>
   );
