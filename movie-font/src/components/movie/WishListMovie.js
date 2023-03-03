@@ -23,7 +23,7 @@ const WishListMovie = () => {
     setUserId(userData.data.id);
     try {
       const wishlistMovies = await axios.get(
-        `${process.env.REACT_APP_API_BASE_URL}/movie/${userData.data.id}`,
+        `${process.env.REACT_APP_API_BASE_URL}/movie`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
