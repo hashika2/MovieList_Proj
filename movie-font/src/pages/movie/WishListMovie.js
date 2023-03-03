@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { BsFillTrashFill } from "react-icons/bs";
 import { getUserId, getWishlistMovie } from "../../api/userApi";
-import Header from "../header/Header";
+import Header from "../../components/header/Header";
 import { Link } from "react-router-dom";
 
 const WishListMovie = () => {

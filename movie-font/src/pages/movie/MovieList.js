@@ -1,5 +1,4 @@
-import Header from "../header/Header";
-import MovieCard from "./movieCard";
+import Header from "../../components/header/Header";
 import React, { useEffect, useState } from "react";
 import {
   getGenres,
@@ -8,7 +7,8 @@ import {
   getyearWiseMovie,
   searchMovie,
 } from "../../api/filterApi";
-import SearchForm from "../forms/SearchForm";
+import SearchForm from "../../components/forms/SearchForm";
+import MovieCard from "./movieCard";
 
 const MovieList = () => {
   const [page, setPage] = useState(1);
