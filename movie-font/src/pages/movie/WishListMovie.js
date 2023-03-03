@@ -2,8 +2,9 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { BsFillTrashFill } from "react-icons/bs";
-import { getUserId } from "../../api/userApi";
-import Header from "../header/Header";
+import { getUserId, getWishlistMovie } from "../../api/userApi";
+import Header from "../../components/header/Header";
+import { Link } from "react-router-dom";
 
 const WishListMovie = () => {
   const [wishlist, setWishlist] = useState([]);
@@ -14,7 +15,6 @@ const WishListMovie = () => {
   const token = localStorage.getItem("token");
 
   useEffect(() => {
-    console.log("**********");
     fetchWishlistMovie();
   }, [movieId]);
 
@@ -22,14 +22,7 @@ const WishListMovie = () => {
     const userData = await getUserId();
     setUserId(userData.data.id);
     try {
-      const wishlistMovies = await axios.get(
-        `${process.env.REACT_APP_API_BASE_URL}/movie/${userData.data.id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const wishlistMovies = await getWishlistMovie();
       setWishlist(wishlistMovies.data);
     } catch (err) {}
   };
@@ -51,7 +44,7 @@ const WishListMovie = () => {
   };
   return (
     <div>
-      <Header />
+      <Header id={movieId} />
       <h1>WishList</h1>
       <div className="container">
         {wishlist.length == 0 && <div>Empty</div>}
@@ -67,8 +60,11 @@ const WishListMovie = () => {
                     id="flexCheckDefault"
                   />
                 </div>
+
                 <div className="col-md-3">
-                  <img src={wish.imgUrl} width={70} style={{ padding: 10 }} />
+                  <Link to={`/movie/${wish.movieId}`} className="movie-item">
+                    <img src={wish.imgUrl} width={70} style={{ padding: 10 }} />
+                  </Link>
                 </div>
                 <div className="col-md-6">
                   <p className="mt-4">{wish.name}</p>

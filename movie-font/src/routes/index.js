@@ -1,10 +1,10 @@
-import Login from "../components/authentication/Login";
-import Register from "../components/authentication/Register";
-import WishListMovie from "../components/movie/WishListMovie";
+import Register from "../pages/auth/Register";
+import WishListMovie from "../pages/movie/WishListMovie";
 import { Navigate, useLocation, useRoutes } from "react-router-dom";
-import MovieList from "../components/movie/MovieList";
-import Movie from "../components/movie/Movie";
+import Movie from "../pages/movie/Movie";
 import AuthGuard from "../guards/AuthGuard";
+import Login from "../pages/auth/Login";
+import MovieList from "../pages/movie/MovieList";
 
 export default function Router() {
   return useRoutes([

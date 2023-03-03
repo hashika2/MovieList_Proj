@@ -6,21 +6,23 @@ import {
   Param,
   Post,
   Query,
+  Req,
   UseGuards,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiQuery } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { MoviewDTO } from './movie.model';
 import { MovieService } from './movie.service';
+import { Request } from 'express';
 
 @UseGuards(JwtAuthGuard)
 @Controller('movie')
 export class MovieController {
-  constructor(private movieService: MovieService) { }
+  constructor(private movieService: MovieService) {}
 
-  @Get(':id')
-  async get(@Param('id') id: string): Promise<any> {
-    return this.movieService.get(id);
+  @Get('/')
+  async get(@Req() request: Request): Promise<any> {
+    return this.movieService.get(request);
   }
 
   @Post('/add')

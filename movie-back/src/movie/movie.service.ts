@@ -1,5 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
+import { AuthService } from 'src/auth/auth.service';
 import { Movie } from 'src/entities';
 import { Repository } from 'typeorm';
 
@@ -8,7 +10,8 @@ export class MovieService {
   constructor(
     @InjectRepository(Movie)
     private movieRepository: Repository<Movie>,
-  ) { }
+    private authService: AuthService,
+  ) {}
 
   async add(movie): Promise<Movie[]> {
     const { movieId, userId } = movie;
@@ -28,9 +31,11 @@ export class MovieService {
     });
   }
 
-  async get(userId): Promise<Movie[]> {
+  async get(request): Promise<Movie[]> {
+    const user = await this.authService.getuserId(request);
+    console.log(user);
     const movies = await this.movieRepository.find({
-      where: { userId },
+      where: { userId: user.id },
     });
     return movies;
   }
