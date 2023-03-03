@@ -14,7 +14,6 @@ const WishListMovie = () => {
   const token = localStorage.getItem("token");
 
   useEffect(() => {
-    console.log("**********");
     fetchWishlistMovie();
   }, [movieId]);
 
