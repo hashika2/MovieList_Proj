@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { BsFillTrashFill } from "react-icons/bs";
-import { getUserId } from "../../api/userApi";
+import { getUserId, getWishlistMovie } from "../../api/userApi";
 import Header from "../header/Header";
 
 const WishListMovie = () => {
@@ -21,14 +21,7 @@ const WishListMovie = () => {
     const userData = await getUserId();
     setUserId(userData.data.id);
     try {
-      const wishlistMovies = await axios.get(
-        `${process.env.REACT_APP_API_BASE_URL}/movie`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const wishlistMovies = await getWishlistMovie();
       setWishlist(wishlistMovies.data);
     } catch (err) {}
   };
