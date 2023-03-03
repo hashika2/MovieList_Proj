@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Navigate, useLocation } from "react-router-dom";
-import Login from "../components/authentication/Login";
+import Login from "../pages/auth/Login";
 
 export default function AuthGuard({ children }) {
   const currentUser = useSelector((state) => state.auth);
