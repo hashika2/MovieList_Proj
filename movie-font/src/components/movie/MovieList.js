@@ -8,7 +8,6 @@ import {
   getyearWiseMovie,
   searchMovie,
 } from "../../api/filterApi";
-import Pagination from "react-bootstrap/Pagination";
 import SearchForm from "../forms/SearchForm";
 
 const MovieList = () => {
@@ -70,9 +69,11 @@ const MovieList = () => {
         <MovieCard page={page} movies={movies} inputMovie={movie} />
         <div>
           {/* <Pagination>{items}</Pagination> */}
+          {/* <Pagin /> */}
           <br />
         </div>
       </div>
+      {/* <Pagin /> */}
     </div>
   );
 };

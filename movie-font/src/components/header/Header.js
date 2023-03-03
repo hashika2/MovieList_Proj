@@ -5,14 +5,14 @@ import { BsBookmark, BsFillPersonFill } from "react-icons/bs";
 import Badge from "react-bootstrap/Badge";
 import { getWishlistMovie } from "../../api/userApi";
 
-const Header = () => {
+const Header = ({ isAdd, id }) => {
   const [count, setCount] = useState(0);
   const isAuth = localStorage.getItem("isAuthenticated");
   const currentUser = useSelector((state) => state.auth);
 
   useEffect(() => {
     wishlistCount();
-  }, []);
+  }, [isAdd, id]);
 
   async function wishlistCount() {
     const wishlist = await getWishlistMovie();

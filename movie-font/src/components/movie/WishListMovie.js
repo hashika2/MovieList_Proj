@@ -44,7 +44,7 @@ const WishListMovie = () => {
   };
   return (
     <div>
-      <Header />
+      <Header id={movieId} />
       <h1>WishList</h1>
       <div className="container">
         {wishlist.length == 0 && <div>Empty</div>}

@@ -56,7 +56,7 @@ const Movie = () => {
   };
   return (
     <div>
-      <Header />
+      <Header isAdd={isAdd} />
       <div className="container">
         <div className="card mt-3 mb-3 text-left">
           <div className="row no-gutters">
