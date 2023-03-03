@@ -8,7 +8,8 @@ import {
   searchMovie,
 } from "../../api/filterApi";
 import SearchForm from "../../components/forms/SearchForm";
-import MovieCard from "./movieCard";
+import MovieCard from "../../components/movie/movieCard";
+import MovieTable from "../../components/movie/MovieTable";
 
 const MovieList = () => {
   const [page, setPage] = useState(1);
@@ -72,6 +73,12 @@ const MovieList = () => {
           {/* <Pagin /> */}
           <br />
         </div>
+        {/* <MovieTable
+          genres={genres}
+          page={page}
+          moviesInfo={movies}
+          inputMovie={movie}
+        /> */}
       </div>
       {/* <Pagin /> */}
     </div>

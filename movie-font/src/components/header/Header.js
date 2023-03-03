@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BsBookmark, BsFillPersonFill } from "react-icons/bs";
 import Badge from "react-bootstrap/Badge";
 import { getWishlistMovie } from "../../api/userApi";
@@ -9,6 +9,7 @@ const Header = ({ isAdd, id }) => {
   const [count, setCount] = useState(0);
   const isAuth = localStorage.getItem("isAuthenticated");
   const currentUser = useSelector((state) => state.auth);
+  const navigate = useNavigate();
 
   useEffect(() => {
     wishlistCount();
@@ -17,6 +18,11 @@ const Header = ({ isAdd, id }) => {
   async function wishlistCount() {
     const wishlist = await getWishlistMovie();
     setCount(wishlist.data.length);
+  }
+
+  function logout() {
+    localStorage.clear();
+    navigate("/login");
   }
   return (
     <nav className="navbar navbar-light bg-light">
@@ -48,7 +54,7 @@ const Header = ({ isAdd, id }) => {
                 {/* <Link className="dropdown-item" to="/wishlist">
                   Wishlist
                 </Link> */}
-                <Link className="dropdown-item" to="/#">
+                <Link className="dropdown-item" onClick={logout}>
                   Logout
                 </Link>
               </div>
