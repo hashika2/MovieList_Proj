@@ -55,7 +55,11 @@ const Header = () => {
             </div>
           </div>
         ) : (
-          <Link className="btn btn-primary navbar-brand" to="/login">
+          <Link
+            className="btn btn-primary navbar-brand"
+            to="/login"
+            style={{ color: "white" }}
+          >
             login
           </Link>
         )}

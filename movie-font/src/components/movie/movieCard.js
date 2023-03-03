@@ -23,7 +23,7 @@ const MovieCard = (info) => {
   return (
     <>
       <div className="row">
-        {/* {!movies && <div>Loading...........</div>} */}
+        {movies.length == 0 && <div>Empty</div>}
         {movies.map((mv, key) => {
           return (
             <div className="movie-card card ml-2" key={key}>

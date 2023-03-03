@@ -84,6 +84,8 @@ const Movie = () => {
                 <p className="card-text">{movie.release_date}(US)</p>
                 <h5 className="card-text">Overview</h5>
                 <p className="card-text">{movie.overview}</p>
+                <h5 className="card-text">Reviews</h5>
+                <h2 className="card-text">{movie.vote_average}</h2>
                 {/* <a href="#" className="btn btn-primary">
                   View Profile
                 </a> */}

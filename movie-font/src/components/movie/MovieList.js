@@ -1,14 +1,22 @@
 import Header from "../header/Header";
 import MovieCard from "./movieCard";
 import React, { useEffect, useState } from "react";
-import { getGenres, getRating, searchMovie } from "../../api/filterApi";
+import {
+  getGenres,
+  getRating,
+  getRatingMovie,
+  getyearWiseMovie,
+  searchMovie,
+} from "../../api/filterApi";
 import Pagination from "react-bootstrap/Pagination";
 
 const MovieList = () => {
   const [page, setPage] = useState(1);
   const [genreses, setGenreses] = useState([]);
-  const [genres, setGenres] = useState([]);
-  const [ratings, setRating] = useState([]);
+  const [genres, setGenres] = useState("");
+  const [years, setYear] = useState([]);
+  const [ratings, setRatings] = useState([]);
+  const [rating, setRating] = useState([]);
   const [movie, setMovie] = useState("");
   const [movies, setMovies] = useState([]);
   const [isChange, setIsChange] = useState(false);
@@ -17,6 +25,8 @@ const MovieList = () => {
     fetchGenres();
     // fetchRatingMovie();
     searchFilterData();
+    setRatings(getRatingMovie());
+    setYear(getyearWiseMovie());
   }, [genres]);
 
   const fetchGenres = async () => {
@@ -26,7 +36,6 @@ const MovieList = () => {
 
   const fetchRatingMovie = async () => {
     const gratingRes = await getRating();
-    console.log(gratingRes);
     setRating(gratingRes.data?.results);
   };
 
@@ -37,20 +46,10 @@ const MovieList = () => {
 
   const searchFilterData = async () => {
     const searchRes = await searchMovie(movie, page);
-    console.log(searchRes);
     setMovies(searchRes.data?.results);
     setPage(searchRes.data?.total_pages);
     setPageNumber();
   };
-  let active = 2;
-  let items = [];
-  for (let number = 1; number <= movies.length; number++) {
-    items.push(
-      <Pagination.Item key={number} active={number === active}>
-        {number}
-      </Pagination.Item>
-    );
-  }
   const setPageNumber = () => {};
 
   return (
@@ -118,22 +117,63 @@ const MovieList = () => {
             </div>
             <div className="col-md-3">
               <div class="dropdown">
+                <div class="input-group-prepend">
+                  <button
+                    class="btn btn-secondary dropdown-toggle"
+                    type="button"
+                    id="dropdownMenuButton"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    Rating
+                  </button>
+                  <div
+                    class="dropdown-menu"
+                    aria-labelledby="dropdownMenuButton"
+                  >
+                    {ratings.map((rating, key) => {
+                      return (
+                        <button
+                          class="dropdown-item"
+                          onClick={() => {
+                            setRating(rating);
+                            setMovie(rating);
+                          }}
+                        >
+                          {rating}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+                {/* <input
+                  type="text"
+                  class="form-control"
+                  aria-label="Text input with dropdown button"
+                  value={rating}
+                  name="rating"
+                /> */}
+              </div>
+            </div>
+            <div className="col-md-3">
+              <div class="dropdown">
                 <button
                   class="btn btn-secondary dropdown-toggle"
                   type="button"
                   id="dropdownMenuButton"
-                  data-bs-toggle="dropdown"
+                  data-toggle="dropdown"
                   aria-haspopup="true"
                   aria-expanded="false"
                 >
-                  Select
+                  Year
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  {ratings.map((rating, key) => {
+                  {years.map((year, key) => {
                     return (
-                      <a class="dropdown-item" href="#">
-                        {rating.title}
-                      </a>
+                      <button class="dropdown-item" href="#">
+                        {year}
+                      </button>
                     );
                   })}
                 </div>
@@ -149,26 +189,7 @@ const MovieList = () => {
                   aria-haspopup="true"
                   aria-expanded="false"
                 >
-                  Select
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <a class="dropdown-item" href="#">
-                    Action
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div className="col-md-3">
-              <div class="dropdown">
-                <button
-                  class="btn btn-secondary dropdown-toggle"
-                  type="button"
-                  id="dropdownMenuButton"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  Select
+                  Order
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                   <a class="dropdown-item" href="#">
@@ -181,7 +202,7 @@ const MovieList = () => {
         </form>
         <MovieCard page={page} movies={movies} inputMovie={movie} />
         <div>
-          <Pagination>{items}</Pagination>
+          {/* <Pagination>{items}</Pagination> */}
           <br />
         </div>
       </div>

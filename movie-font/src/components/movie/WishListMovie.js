@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { BsFillTrashFill } from "react-icons/bs";
 import { getUserId, getWishlistMovie } from "../../api/userApi";
 import Header from "../header/Header";
+import { Link } from "react-router-dom";
 
 const WishListMovie = () => {
   const [wishlist, setWishlist] = useState([]);
@@ -59,8 +60,11 @@ const WishListMovie = () => {
                     id="flexCheckDefault"
                   />
                 </div>
+
                 <div className="col-md-3">
-                  <img src={wish.imgUrl} width={70} style={{ padding: 10 }} />
+                  <Link to={`/movie/${wish.movieId}`} className="movie-item">
+                    <img src={wish.imgUrl} width={70} style={{ padding: 10 }} />
+                  </Link>
                 </div>
                 <div className="col-md-6">
                   <p className="mt-4">{wish.name}</p>
