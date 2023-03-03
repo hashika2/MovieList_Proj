@@ -22,3 +22,22 @@ If you've previously installed create-react-app globally via npm install -g crea
 
 Then open http://localhost:3000/ to see your app.
 When you’re ready to deploy to production, create a minified bundle with npm run build.
+
+
+## Backend
+
+Setup
+Setting up a new project is quite simple with the Nest CLI. With npm installed, you can create a new Nest project with the following commands in your OS terminal:
+
+$ npm i -g @nestjs/cli
+$ nest new project-name
+info Hint To create a new project with TypeScript's strict mode enabled, pass the --strict flag to the nest new command.
+
+The project-name directory will be created, node modules and a few other boilerplate files will be installed, and a src/ directory will be created and populated with several core files.
+
+src
+app.controller.spec.ts
+app.controller.ts
+app.module.ts
+app.service.ts
+main.ts
