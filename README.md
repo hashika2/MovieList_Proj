@@ -53,3 +53,36 @@ To watch for changes in your files, you can run the following command to start t
 
 $ npm run start:dev
 This command will watch your files, automatically recompiling and reloading the server.
+
+#Database(MUSQL)
+
+## Installation of typeOrm
+Install the npm package:
+
+npm install typeorm  mysql2 --save
+
+import { DataSource } from 'typeorm';
+
+database connection
+
+export const databaseProviders = [
+  {
+    provide: 'DATA_SOURCE',
+    useFactory: async () => {
+      const dataSource = new DataSource({
+        type: 'mysql',
+        host: 'localhost',
+        port: 3306,
+        username: 'root',
+        password: 'root',
+        database: 'test',
+        entities: [
+            __dirname + '/../**/*.entity{.ts,.js}',
+        ],
+        synchronize: true,
+      });
+
+      return dataSource.initialize();
+    },
+  },
+];
