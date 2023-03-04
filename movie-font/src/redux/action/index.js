@@ -1,27 +1,29 @@
+import { Types } from "../types";
+
 export const loginUser = (userObj) => {
   return {
-    type: "USER_LOGGED",
+    type: Types.USER_LOGGED,
     payload: userObj,
   };
 };
 
 export const registerUser = (userObj) => {
   return {
-    type: "USER_REGISTERED",
+    type: Types.USER_REGISTERED,
     payload: userObj,
   };
 };
 
 export const addMovie = (movieObj) => {
   return {
-    type: "MOVIE_ADDED",
+    type: Types.MOVIE_ADDED,
     payload: movieObj,
   };
 };
 
 export const removeMovie = (movieObj) => {
   return {
-    type: "MOVIE_REMOVED",
+    type: Types.MOVIE_REMOVED,
     payload: movieObj,
   };
 };

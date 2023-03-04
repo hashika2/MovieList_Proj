@@ -1,3 +1,5 @@
+import { Types } from "../types";
+
 const initialesState = {
   data: null,
   isAuthenticated: false,
@@ -6,7 +8,7 @@ const initialesState = {
 
 export default function (state = initialesState, action) {
   switch (action.type) {
-    case "USER_LOGGED":
+    case Types.USER_LOGGED:
       return {
         ...state,
         token: action.payload.accessToken,
@@ -14,13 +16,13 @@ export default function (state = initialesState, action) {
         isAuthenticated: true,
         isRegistered: true,
       };
-    case "USER_REGISTERED":
+    case Types.USER_REGISTERED:
       return {
         ...state,
         data: action.payload,
         isRegistered: true,
       };
-    case "LOGIN_FAIL":
+    case Types.LOGIN_FAIL:
       return {
         ...state,
         data: action.payload,
