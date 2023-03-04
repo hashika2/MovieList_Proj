@@ -18,15 +18,15 @@ import { Request } from 'express';
 @UseGuards(JwtAuthGuard)
 @Controller('movie')
 export class MovieController {
-  constructor(private movieService: MovieService) {}
+  constructor(private movieService: MovieService) { }
 
   @Get('/')
-  async get(@Req() request: Request): Promise<any> {
+  async get(@Req() request: Request) {
     return this.movieService.get(request);
   }
 
   @Post('/add')
-  async add(@Body() movie: MoviewDTO): Promise<any> {
+  async add(@Body() movie: MoviewDTO) {
     return this.movieService.add(movie);
   }
 
@@ -41,7 +41,7 @@ export class MovieController {
     required: true,
     type: String,
   })
-  async remove(@Query() params: any): Promise<any> {
+  async remove(@Query() params: any) {
     return this.movieService.remove(params);
   }
 }
