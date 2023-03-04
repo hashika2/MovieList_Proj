@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { BsEye } from "react-icons/bs";
 import { getuPularMovie } from "../../api/filterApi";
+import { MOVIE_DB_IMAGE_URL } from "../../constant/inde";
 
 const MovieTable = ({ genres, moviesInfo, inputMovie, page, setTotalPage }) => {
   const [movies, setMovies] = useState([]);
@@ -55,7 +56,7 @@ const MovieTable = ({ genres, moviesInfo, inputMovie, page, setTotalPage }) => {
                     <th scope="row">
                       <div class="d-flex align-items-center">
                         <img
-                          src="https://www.themoviedb.org/t/p/w220_and_h330_face/130H1gap9lFfiTF9iDrqNIkFvC9.jpg"
+                          src={`${MOVIE_DB_IMAGE_URL}/${mv.poster_path}`}
                           alt="Card image cap"
                           class="img-fluid rounded-3"
                           style={{ width: 130 }}

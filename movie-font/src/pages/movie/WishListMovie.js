@@ -3,10 +3,15 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { BsFillTrashFill } from "react-icons/bs";
 import Swal from "sweetalert2";
-import { getUserId, getWishlistMovie } from "../../api/userApi";
+import {
+  getUserId,
+  getWishlistMovie,
+  removeFromWishList,
+} from "../../api/userApi";
 import Header from "../../components/header/Header";
 import { Link } from "react-router-dom";
 import { removeMovie } from "../../redux/action";
+import { MOVIE_DB_IMAGE_URL } from "../../constant/inde";
 
 const WishListMovie = () => {
   const [wishlist, setWishlist] = useState([]);
@@ -46,14 +51,7 @@ const WishListMovie = () => {
 
   async function setRemoveMovie(id) {
     try {
-      await axios.delete(
-        `${process.env.REACT_APP_API_BASE_URL}/movie/remove?userId=${userId}&movieId=${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      await removeFromWishList(userId, id);
       setMovieId(id);
       dispatch(removeMovie("The item is removed"));
     } catch (err) {
@@ -64,7 +62,9 @@ const WishListMovie = () => {
   return (
     <div>
       <Header id={movieId} />
-      <h1>WishList</h1>
+      <div style={{ display: "flex" }}>
+        <h1>WishList</h1> <button>Remove Selected</button>
+      </div>
       <div className="container">
         {wishlist.length == 0 && <div>Empty</div>}
         {wishlist.map((wish, key) => {
@@ -82,7 +82,11 @@ const WishListMovie = () => {
 
                 <div className="col-md-3">
                   <Link to={`/movie/${wish.movieId}`} className="movie-item">
-                    <img src={wish.imgUrl} width={70} style={{ padding: 10 }} />
+                    <img
+                      src={`${MOVIE_DB_IMAGE_URL}/${wish.imgUrl}`}
+                      width={70}
+                      className="p-1"
+                    />
                   </Link>
                 </div>
                 <div className="col-md-6">

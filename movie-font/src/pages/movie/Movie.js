@@ -8,6 +8,7 @@ import { BsBookmark } from "react-icons/bs";
 import { addMovie } from "../../redux/action";
 import { getUserId } from "../../api/userApi";
 import Loader from "../../components/common/Loader";
+import { MOVIE_DB_IMAGE_URL } from "../../constant/inde";
 
 const Movie = () => {
   const { id } = useParams();
@@ -43,8 +44,7 @@ const Movie = () => {
           movieId: movie.id,
           name: movie.title,
           userId: userData.data.id,
-          imgUrl:
-            "https://www.themoviedb.org/t/p/w220_and_h330_face/130H1gap9lFfiTF9iDrqNIkFvC9.jpg",
+          imgUrl: `${movie.poster_path}`,
         },
         {
           headers: {
@@ -72,7 +72,7 @@ const Movie = () => {
               <div className="col-sm-5">
                 <img
                   className="card-img"
-                  src="https://www.themoviedb.org/t/p/w220_and_h330_face/130H1gap9lFfiTF9iDrqNIkFvC9.jpg"
+                  src={`${MOVIE_DB_IMAGE_URL}/${movie.poster_path}`}
                   alt="Suresh Dasari Card"
                 />
               </div>

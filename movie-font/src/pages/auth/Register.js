@@ -54,6 +54,7 @@ const Register = () => {
                       id="floatingInput"
                       placeholder="name@example.com"
                       onChange={(e) => setFirstName(e.target.value)}
+                      value={firstName}
                     />
                     <label for="floatingInput">First Name</label>
                   </div>
@@ -65,6 +66,7 @@ const Register = () => {
                       id="floatingInput"
                       placeholder="name@example.com"
                       onChange={(e) => setLastName(e.target.value)}
+                      value={lastName}
                     />
                     <label for="floatingInput">Last Name</label>
                   </div>
@@ -76,6 +78,7 @@ const Register = () => {
                       id="floatingInput"
                       placeholder="name@example.com"
                       onChange={(e) => setEmail(e.target.value)}
+                      value={email}
                     />
                     <label for="floatingInput">Email address</label>
                   </div>
@@ -86,6 +89,7 @@ const Register = () => {
                       id="floatingPassword"
                       placeholder="Password"
                       onChange={(e) => setPassword(e.target.value)}
+                      value={password}
                     />
                     <label for="floatingPassword">Password</label>
                   </div>
@@ -97,6 +101,7 @@ const Register = () => {
                       id="floatingPassword"
                       placeholder="Password"
                       onChange={(e) => setConfirmPassword(e.target.value)}
+                      value={confirmPassword}
                     />
                     <label for="floatingPassword">Confirm Password</label>
                   </div>

@@ -18,6 +18,9 @@
   text-decoration: none;
   color: black;
 }
+.movie-item img {
+  width: 130px;
+}
 
 .tb-cl-1 {
   width: 20%;

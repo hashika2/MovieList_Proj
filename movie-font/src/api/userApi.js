@@ -15,3 +15,14 @@ export const getWishlistMovie = () => {
     },
   });
 };
+
+export const removeFromWishList = (userId, id) => {
+  return axios.delete(
+    `${process.env.REACT_APP_API_BASE_URL}/movie/remove?userId=${userId}&movieId=${id}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+};

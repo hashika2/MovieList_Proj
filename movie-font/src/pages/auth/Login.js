@@ -54,6 +54,7 @@ const Login = () => {
                       id="floatingInput"
                       placeholder="name@example.com"
                       onChange={(e) => setEmail(e.target.value)}
+                      value={email}
                     />
                     <label for="floatingInput">Email address</label>
                   </div>
@@ -64,6 +65,7 @@ const Login = () => {
                       id="floatingPassword"
                       placeholder="Password"
                       onChange={(e) => setPassword(e.target.value)}
+                      value={password}
                     />
                     <label for="floatingPassword">Password</label>
                   </div>
@@ -76,8 +78,7 @@ const Login = () => {
                       id="form1Example3"
                     />
                     <label className="form-check-label" for="form1Example3">
-                      {" "}
-                      Remember password{" "}
+                      Remember password
                     </label>
                   </div>
 
