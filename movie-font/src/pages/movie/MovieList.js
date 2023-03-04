@@ -2,13 +2,11 @@ import Header from "../../components/header/Header";
 import React, { useEffect, useState } from "react";
 import {
   getGenres,
-  getRating,
   getRatingMovie,
   getyearWiseMovie,
   searchMovie,
 } from "../../api/filterApi";
 import SearchForm from "../../components/forms/SearchForm";
-import MovieCard from "../../components/movie/movieCard";
 import MovieTable from "../../components/movie/MovieTable";
 import Pagin from "../../components/movie/pagination";
 
@@ -22,11 +20,9 @@ const MovieList = () => {
   const [rating, setRating] = useState([]);
   const [movie, setMovie] = useState("");
   const [movies, setMovies] = useState([]);
-  const [isChange, setIsChange] = useState(false);
 
   useEffect(() => {
     fetchGenres();
-    // fetchRatingMovie();
     searchFilterData();
     setRatings(getRatingMovie());
     setYear(getyearWiseMovie());
@@ -35,11 +31,6 @@ const MovieList = () => {
   const fetchGenres = async () => {
     const genRes = await getGenres();
     setGenreses(genRes.data?.genres);
-  };
-
-  const fetchRatingMovie = async () => {
-    const gratingRes = await getRating();
-    setRating(gratingRes.data?.results);
   };
 
   const onSubmit = async (e) => {
@@ -78,7 +69,6 @@ const MovieList = () => {
         />
         <Pagin page={page} tatalPage={totalPage} setPage={setPage} />
       </div>
-      {/* <Pagin /> */}
     </div>
   );
 };

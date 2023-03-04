@@ -1,14 +1,14 @@
 import Header from "../../components/header/Header";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import axios from "axios";
-import Notiflix, { Loading } from "notiflix";
+import { useDispatch } from "react-redux";
+import Notiflix from "notiflix";
 import { BsBookmark } from "react-icons/bs";
 import { addMovie } from "../../redux/action";
-import { getUserId } from "../../api/userApi";
+import { addToWishList, getUserId } from "../../api/userApi";
 import Loader from "../../components/common/Loader";
 import { MOVIE_DB_IMAGE_URL } from "../../constant/inde";
+import { getMovieInfo } from "../../api/filterApi";
 
 const Movie = () => {
   const { id } = useParams();
@@ -16,8 +16,6 @@ const Movie = () => {
   const [isloading, setIsLoading] = useState(true);
   const [isAdd, setIsAdd] = useState(false);
   const dispatch = useDispatch();
-  const currentUser = useSelector((state) => state.auth);
-  const token = localStorage.getItem("token");
 
   useEffect(() => {
     getMovieDetails();
@@ -25,9 +23,7 @@ const Movie = () => {
 
   const getMovieDetails = async () => {
     try {
-      const res = await axios.get(
-        `${process.env.REACT_APP_REST_API_BASE_URL}/3/movie/${id}?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`
-      );
+      const res = await getMovieInfo(id);
       setMovie(res.data);
       setIsLoading(false);
     } catch (err) {
@@ -38,20 +34,7 @@ const Movie = () => {
   const addWishList = async () => {
     const userData = await getUserId();
     try {
-      const res = await axios.post(
-        `${process.env.REACT_APP_API_BASE_URL}/movie/add`,
-        {
-          movieId: movie.id,
-          name: movie.title,
-          userId: userData.data.id,
-          imgUrl: `${movie.poster_path}`,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const res = await addToWishList(movie, userData);
       setIsAdd(true);
       dispatch(addMovie(res.data));
       Notiflix.Notify.success("Added to wishlist");
@@ -61,6 +44,7 @@ const Movie = () => {
       // setIsAdd(false);
     }
   };
+
   return (
     <div>
       <Header isAdd={isAdd} />

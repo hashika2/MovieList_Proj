@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { userLogin } from "../../api/userApi";
 import { loginUser } from "../../redux/action";
 
 const Login = () => {
@@ -14,13 +15,7 @@ const Login = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
-      const logingData = await axios.post(
-        `${process.env.REACT_APP_API_BASE_URL}/auth/signin`,
-        {
-          email,
-          password,
-        }
-      );
+      const logingData = await userLogin(email, password);
       if (logingData) {
         localStorage.setItem("token", logingData.data.access_token);
         dispatch(loginUser(logingData.data));

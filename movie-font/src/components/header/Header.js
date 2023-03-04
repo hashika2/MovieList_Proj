@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { BsBookmark, BsFillPersonFill } from "react-icons/bs";
 import Badge from "react-bootstrap/Badge";
@@ -8,7 +7,6 @@ import { getWishlistMovie } from "../../api/userApi";
 const Header = ({ isAdd, id }) => {
   const [count, setCount] = useState(0);
   const isAuth = localStorage.getItem("isAuthenticated");
-  const currentUser = useSelector((state) => state.auth);
   const navigate = useNavigate();
 
   useEffect(() => {

@@ -24,10 +24,16 @@ export const getuPularMovie = (page) => {
   );
 };
 
+export const getMovieInfo = (id) => {
+  return axios.get(
+    `${process.env.REACT_APP_REST_API_BASE_URL}/3/movie/${id}?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`
+  );
+};
+
 export const getRatingMovie = () => {
   return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 };
 
-export const getyearWiseMovie = (page) => {
+export const getyearWiseMovie = () => {
   return ["2000", "2001", "2002", "2003", "2021", "2022"];
 };

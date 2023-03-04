@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { userRegister } from "../../api/userApi";
 import { registerUser } from "../../redux/action";
 
 const Register = () => {
@@ -17,14 +18,11 @@ const Register = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
     if (password === confirmPassword) {
-      const registerData = await axios.post(
-        `${process.env.REACT_APP_API_BASE_URL}/auth/signup`,
-        {
-          firstName,
-          lastName,
-          email,
-          password,
-        }
+      const registerData = await userRegister(
+        firstName,
+        lastName,
+        email,
+        password
       );
       dispatch(registerUser(registerData.data));
     } else {

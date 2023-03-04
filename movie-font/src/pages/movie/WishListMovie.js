@@ -1,6 +1,5 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { BsFillTrashFill } from "react-icons/bs";
 import Swal from "sweetalert2";
 import {
@@ -17,9 +16,7 @@ const WishListMovie = () => {
   const [wishlist, setWishlist] = useState([]);
   const [userId, setUserId] = useState("");
   const [movieId, setMovieId] = useState("");
-  const currentUser = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  const token = localStorage.getItem("token");
 
   useEffect(() => {
     fetchWishlistMovie();
