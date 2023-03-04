@@ -2,9 +2,11 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { BsFillTrashFill } from "react-icons/bs";
+import Swal from "sweetalert2";
 import { getUserId, getWishlistMovie } from "../../api/userApi";
 import Header from "../../components/header/Header";
 import { Link } from "react-router-dom";
+import { removeMovie } from "../../redux/action";
 
 const WishListMovie = () => {
   const [wishlist, setWishlist] = useState([]);
@@ -27,9 +29,24 @@ const WishListMovie = () => {
     } catch (err) {}
   };
 
-  const removeMovie = async (id) => {
+  const removeItem = async (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to remove this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      confirmButtonText: "Remove",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        setRemoveMovie(id);
+      }
+    });
+  };
+
+  async function setRemoveMovie(id) {
     try {
-      const deleteMovie = await axios.delete(
+      await axios.delete(
         `${process.env.REACT_APP_API_BASE_URL}/movie/remove?userId=${userId}&movieId=${id}`,
         {
           headers: {
@@ -37,11 +54,13 @@ const WishListMovie = () => {
           },
         }
       );
-      // fetchWishlistMovie();
       setMovieId(id);
-      // dispatch(removeMovie("The item is removed"));
-    } catch (err) {}
-  };
+      dispatch(removeMovie("The item is removed"));
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   return (
     <div>
       <Header id={movieId} />
@@ -72,7 +91,7 @@ const WishListMovie = () => {
                 <div className="col-md-1">
                   <button
                     className="btn btn-danger mt-4"
-                    onClick={() => removeMovie(wish.movieId)}
+                    onClick={() => removeItem(wish.movieId)}
                   >
                     <BsFillTrashFill />
                   </button>
