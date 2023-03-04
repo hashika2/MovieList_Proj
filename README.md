@@ -54,9 +54,9 @@ To watch for changes in your files, you can run the following command to start t
 $ npm run start:dev
 This command will watch your files, automatically recompiling and reloading the server.
 
-#Database(MYSQL)
+## Database(MYSQL)
 
-## Installation of typeOrm
+### Installation of typeOrm
 Install the npm package:
 
 npm install typeorm  mysql2 --save
