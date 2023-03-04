@@ -10,9 +10,11 @@ import {
 import SearchForm from "../../components/forms/SearchForm";
 import MovieCard from "../../components/movie/movieCard";
 import MovieTable from "../../components/movie/MovieTable";
+import Pagin from "../../components/movie/pagination";
 
 const MovieList = () => {
   const [page, setPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(1);
   const [genreses, setGenreses] = useState([]);
   const [genres, setGenres] = useState("");
   const [years, setYear] = useState([]);
@@ -28,7 +30,7 @@ const MovieList = () => {
     searchFilterData();
     setRatings(getRatingMovie());
     setYear(getyearWiseMovie());
-  }, [genres]);
+  }, [genres, page]);
 
   const fetchGenres = async () => {
     const genRes = await getGenres();
@@ -48,10 +50,9 @@ const MovieList = () => {
   const searchFilterData = async () => {
     const searchRes = await searchMovie(movie, page);
     setMovies(searchRes.data?.results);
-    setPage(searchRes.data?.total_pages);
-    setPageNumber();
+    // setPage(searchRes.data?.total_pages);
+    setTotalPage(searchRes.data?.total_pages);
   };
-  const setPageNumber = () => {};
 
   return (
     <div>
@@ -67,18 +68,15 @@ const MovieList = () => {
           setRating={setRating}
           years={years}
         />
-        <MovieCard page={page} movies={movies} inputMovie={movie} />
-        <div>
-          {/* <Pagination>{items}</Pagination> */}
-          {/* <Pagin /> */}
-          <br />
-        </div>
-        {/* <MovieTable
+        {/* <MovieCard page={page} movies={movies} inputMovie={movie} /> */}
+        <MovieTable
           genres={genres}
           page={page}
           moviesInfo={movies}
           inputMovie={movie}
-        /> */}
+          setTotalPage={setTotalPage}
+        />
+        <Pagin page={page} tatalPage={totalPage} setPage={setPage} />
       </div>
       {/* <Pagin /> */}
     </div>

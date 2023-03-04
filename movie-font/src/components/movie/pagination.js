@@ -1,6 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Pagination } from "react-bootstrap";
 import ReactPaginate from "react-paginate";
+import { PaginationControl } from "react-bootstrap-pagination-control";
 const items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
 
 function Items({ currentItems }) {
@@ -16,18 +17,36 @@ function Items({ currentItems }) {
   );
 }
 
-function Pagin(currentItems) {
+// function Pagin(currentItems) {
+//   return (
+//     <>
+//       <Items currentItems={currentItems} />
+//       <ReactPaginate
+//         breakLabel="..."
+//         nextLabel="next >"
+//         // onPageChange={handlePageClick}
+//         pageRangeDisplayed={5}
+//         pageCount={10}
+//         previousLabel="< previous"
+//         renderOnZeroPageCount={null}
+//       />
+//     </>
+//   );
+// }
+
+function Pagin({ page, setPage, tatalPage }) {
   return (
     <>
-      <Items currentItems={currentItems} />
-      <ReactPaginate
-        breakLabel="..."
-        nextLabel="next >"
-        // onPageChange={handlePageClick}
-        pageRangeDisplayed={5}
-        pageCount={10}
-        previousLabel="< previous"
-        renderOnZeroPageCount={null}
+      <PaginationControl
+        page={page}
+        between={4}
+        total={tatalPage}
+        limit={20}
+        changePage={(page) => {
+          setPage(page);
+          console.log(page);
+        }}
+        ellipsis={1}
       />
     </>
   );
