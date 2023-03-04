@@ -9,6 +9,7 @@ import { addToWishList, getUserId } from "../../api/userApi";
 import Loader from "../../components/common/Loader";
 import { MOVIE_DB_IMAGE_URL } from "../../constant/inde";
 import { getMovieInfo } from "../../api/filterApi";
+import "../../style/movie.css";
 
 const Movie = () => {
   const { id } = useParams();
@@ -61,7 +62,7 @@ const Movie = () => {
                 />
               </div>
               <div className="col-sm-7">
-                <div className="movie card-body">
+                <div className="card-body">
                   <button
                     data-toggle="modal"
                     style={{
@@ -73,12 +74,12 @@ const Movie = () => {
                       style={{ backgroundColor: isAdd ? "orange" : "white" }}
                     />
                   </button>
-                  <h2 className="card-title">{movie.title}</h2>
-                  <p className="card-text">{movie.release_date}(US)</p>
-                  <h5 className="card-text">Overview</h5>
-                  <p className="card-text">{movie.overview}</p>
-                  <h5 className="card-text">Reviews</h5>
-                  <h2 className="card-text">{movie.vote_average}</h2>
+                  <h2 className="movie card-title">{movie.title}</h2>
+                  <p className="movie card-text">{movie.release_date}(US)</p>
+                  <h5 className="movie card-text">Overview</h5>
+                  <p className="movie card-text">{movie.overview}</p>
+                  <h5 className="movie card-text">Reviews</h5>
+                  <h2 className="movie card-text">{movie.vote_average}</h2>
                   {/* <a href="#" className="btn btn-primary">
                   View Profile
                 </a> */}
