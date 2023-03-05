@@ -22,7 +22,7 @@ const WishListMovie = () => {
 
   useEffect(() => {
     fetchWishlistMovie();
-  }, [movieId, wishlist]);
+  }, [movieId]);
 
   const fetchWishlistMovie = async () => {
     const userData = await getUserId();
@@ -79,6 +79,7 @@ const WishListMovie = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         removeMovies(removeList);
+        window.location.reload(true);
       }
     });
   }
@@ -98,12 +99,14 @@ const WishListMovie = () => {
       <div className="container">
         <div>
           <h1>WishList</h1>
-          <button
-            className="remove-btn btn btn-danger mb-2"
-            onClick={() => removeAllItem()}
-          >
-            Remove Selected
-          </button>
+          {wishlist.length > 0 && (
+            <button
+              className="remove-btn btn btn-danger mb-2"
+              onClick={() => removeAllItem()}
+            >
+              Remove Selected
+            </button>
+          )}
         </div>
         {wishlist.length == 0 && <div>Empty</div>}
         {wishlist.map((wish, key) => {
