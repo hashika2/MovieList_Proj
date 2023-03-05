@@ -1,13 +1,26 @@
 import axios from "axios";
 
-const token = localStorage.getItem("token");
-
 const userClient = axios.create({
   baseURL: `${process.env.REACT_APP_API_BASE_URL}`,
-  headers: {
-    Authorization: `Bearer ${token}`,
-  },
+  // headers: {
+  //   Authorization: `Bearer ${token}`,
+  // },
 });
+
+userClient.interceptors.request.use(
+  async (config) => {
+    const token = await localStorage.getItem("token");
+    if (token) {
+      config.headers = {
+        Authorization: `Bearer ${token}`,
+      };
+    }
+    return config;
+  },
+  (err) => {
+    return Promise.reject(err);
+  }
+);
 
 export const userLogin = (email, password) => {
   return userClient.post(`auth/signin`, {
