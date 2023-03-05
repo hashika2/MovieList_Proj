@@ -1,7 +1,7 @@
-import axios from "axios";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { userLogin } from "../../api/userApi";
 import { loginUser } from "../../redux/action";
 
 const Login = () => {
@@ -14,13 +14,7 @@ const Login = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
-      const logingData = await axios.post(
-        `${process.env.REACT_APP_API_BASE_URL}/auth/signin`,
-        {
-          email,
-          password,
-        }
-      );
+      const logingData = await userLogin(email, password);
       if (logingData) {
         localStorage.setItem("token", logingData.data.access_token);
         dispatch(loginUser(logingData.data));
@@ -54,8 +48,11 @@ const Login = () => {
                       id="floatingInput"
                       placeholder="name@example.com"
                       onChange={(e) => setEmail(e.target.value)}
+                      value={email}
                     />
-                    <label for="floatingInput">Email address</label>
+                    <label for="floatingInput" htmlFor="email">
+                      Email address
+                    </label>
                   </div>
                   <div class="form-floating">
                     <input
@@ -64,8 +61,11 @@ const Login = () => {
                       id="floatingPassword"
                       placeholder="Password"
                       onChange={(e) => setPassword(e.target.value)}
+                      value={password}
                     />
-                    <label for="floatingPassword">Password</label>
+                    <label for="floatingPassword" htmlFor="email">
+                      Password
+                    </label>
                   </div>
 
                   <div className="form-check d-flex justify-content-start mb-4 mt-4">
@@ -76,8 +76,7 @@ const Login = () => {
                       id="form1Example3"
                     />
                     <label className="form-check-label" for="form1Example3">
-                      {" "}
-                      Remember password{" "}
+                      Remember password
                     </label>
                   </div>
 

@@ -11,7 +11,7 @@ export class MovieService {
     @InjectRepository(Movie)
     private movieRepository: Repository<Movie>,
     private authService: AuthService,
-  ) {}
+  ) { }
 
   async add(movie): Promise<Movie[]> {
     const { movieId, userId } = movie;
@@ -24,16 +24,20 @@ export class MovieService {
     return await this.movieRepository.save(movie);
   }
 
-  async remove(params): Promise<any> {
-    return await this.movieRepository.delete({
-      userId: params.userId,
-      movieId: params.movieId,
-    });
+  async remove(ids, request): Promise<any> {
+    const user = await this.authService.getuserId(request);
+    const movieIds = ids.movieIds;
+    const userId = user.id;
+    await this.movieRepository
+      .createQueryBuilder()
+      .delete()
+      .where('userId = :userId', { userId })
+      .andWhere('movieId IN (:...movieIds)', { movieIds })
+      .execute();
   }
 
   async get(request): Promise<Movie[]> {
     const user = await this.authService.getuserId(request);
-    console.log(user);
     const movies = await this.movieRepository.find({
       where: { userId: user.id },
     });

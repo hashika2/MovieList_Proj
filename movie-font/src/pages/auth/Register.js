@@ -1,7 +1,8 @@
-import axios from "axios";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import Notiflix from "notiflix";
+import { userRegister } from "../../api/userApi";
 import { registerUser } from "../../redux/action";
 
 const Register = () => {
@@ -16,20 +17,17 @@ const Register = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    if (password === confirmPassword) {
-      const registerData = await axios.post(
-        `${process.env.REACT_APP_API_BASE_URL}/auth/signup`,
-        {
-          firstName,
-          lastName,
-          email,
-          password,
-        }
-      );
-      dispatch(registerUser(registerData.data));
-    } else {
-      console.log("passowrd are not matched");
+    if (password !== confirmPassword) {
+      Notiflix.Notify.failure("passowrd are not matched");
+      return;
     }
+    const registerData = await userRegister(
+      firstName,
+      lastName,
+      email,
+      password
+    );
+    dispatch(registerUser(registerData.data));
   };
 
   //need to change
@@ -54,6 +52,7 @@ const Register = () => {
                       id="floatingInput"
                       placeholder="name@example.com"
                       onChange={(e) => setFirstName(e.target.value)}
+                      value={firstName}
                     />
                     <label for="floatingInput">First Name</label>
                   </div>
@@ -65,6 +64,7 @@ const Register = () => {
                       id="floatingInput"
                       placeholder="name@example.com"
                       onChange={(e) => setLastName(e.target.value)}
+                      value={lastName}
                     />
                     <label for="floatingInput">Last Name</label>
                   </div>
@@ -76,6 +76,7 @@ const Register = () => {
                       id="floatingInput"
                       placeholder="name@example.com"
                       onChange={(e) => setEmail(e.target.value)}
+                      value={email}
                     />
                     <label for="floatingInput">Email address</label>
                   </div>
@@ -86,6 +87,7 @@ const Register = () => {
                       id="floatingPassword"
                       placeholder="Password"
                       onChange={(e) => setPassword(e.target.value)}
+                      value={password}
                     />
                     <label for="floatingPassword">Password</label>
                   </div>
@@ -97,6 +99,7 @@ const Register = () => {
                       id="floatingPassword"
                       placeholder="Password"
                       onChange={(e) => setConfirmPassword(e.target.value)}
+                      value={confirmPassword}
                     />
                     <label for="floatingPassword">Confirm Password</label>
                   </div>

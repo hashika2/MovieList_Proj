@@ -1,13 +1,15 @@
-import Header from "../../components/header/Header";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import axios from "axios";
-import Notiflix, { Loading } from "notiflix";
+import { useDispatch } from "react-redux";
+import Notiflix from "notiflix";
 import { BsBookmark } from "react-icons/bs";
 import { addMovie } from "../../redux/action";
-import { getUserId } from "../../api/userApi";
+import { addToWishList, getUserId } from "../../api/userApi";
 import Loader from "../../components/common/Loader";
+import { MOVIE_DB_IMAGE_URL } from "../../constant/inde";
+import { getMovieInfo } from "../../api/filterApi";
+import Header from "../../components/header/Header";
+import "../../style/movie.css";
 
 const Movie = () => {
   const { id } = useParams();
@@ -15,8 +17,6 @@ const Movie = () => {
   const [isloading, setIsLoading] = useState(true);
   const [isAdd, setIsAdd] = useState(false);
   const dispatch = useDispatch();
-  const currentUser = useSelector((state) => state.auth);
-  const token = localStorage.getItem("token");
 
   useEffect(() => {
     getMovieDetails();
@@ -24,9 +24,7 @@ const Movie = () => {
 
   const getMovieDetails = async () => {
     try {
-      const res = await axios.get(
-        `${process.env.REACT_APP_REST_API_BASE_URL}/3/movie/${id}?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`
-      );
+      const res = await getMovieInfo(id);
       setMovie(res.data);
       setIsLoading(false);
     } catch (err) {
@@ -37,21 +35,7 @@ const Movie = () => {
   const addWishList = async () => {
     const userData = await getUserId();
     try {
-      const res = await axios.post(
-        `${process.env.REACT_APP_API_BASE_URL}/movie/add`,
-        {
-          movieId: movie.id,
-          name: movie.title,
-          userId: userData.data.id,
-          imgUrl:
-            "https://www.themoviedb.org/t/p/w220_and_h330_face/130H1gap9lFfiTF9iDrqNIkFvC9.jpg",
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const res = await addToWishList(movie, userData);
       setIsAdd(true);
       dispatch(addMovie(res.data));
       Notiflix.Notify.success("Added to wishlist");
@@ -61,6 +45,7 @@ const Movie = () => {
       // setIsAdd(false);
     }
   };
+
   return (
     <div>
       <Header isAdd={isAdd} />
@@ -72,12 +57,12 @@ const Movie = () => {
               <div className="col-sm-5">
                 <img
                   className="card-img"
-                  src="https://www.themoviedb.org/t/p/w220_and_h330_face/130H1gap9lFfiTF9iDrqNIkFvC9.jpg"
+                  src={`${MOVIE_DB_IMAGE_URL}/${movie.poster_path}`}
                   alt="Suresh Dasari Card"
                 />
               </div>
               <div className="col-sm-7">
-                <div className="movie card-body">
+                <div className="card-body">
                   <button
                     data-toggle="modal"
                     style={{
@@ -89,12 +74,12 @@ const Movie = () => {
                       style={{ backgroundColor: isAdd ? "orange" : "white" }}
                     />
                   </button>
-                  <h2 className="card-title">{movie.title}</h2>
-                  <p className="card-text">{movie.release_date}(US)</p>
-                  <h5 className="card-text">Overview</h5>
-                  <p className="card-text">{movie.overview}</p>
-                  <h5 className="card-text">Reviews</h5>
-                  <h2 className="card-text">{movie.vote_average}</h2>
+                  <h2 className="movie card-title">{movie.title}</h2>
+                  <p className="movie card-text">{movie.release_date}(US)</p>
+                  <h5 className="movie card-text">Overview</h5>
+                  <p className="movie card-text">{movie.overview}</p>
+                  <h5 className="movie card-text">Reviews</h5>
+                  <h2 className="movie card-text">{movie.vote_average}</h2>
                   {/* <a href="#" className="btn btn-primary">
                   View Profile
                 </a> */}

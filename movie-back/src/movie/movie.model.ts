@@ -18,3 +18,9 @@ export class MoviewDTO {
   @IsNotEmpty()
   imgUrl: string;
 }
+
+export class MovieIdsDTO {
+  @ApiProperty()
+  @IsNotEmpty()
+  movieIds: [];
+}

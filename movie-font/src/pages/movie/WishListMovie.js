@@ -1,20 +1,24 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { BsFillTrashFill } from "react-icons/bs";
 import Swal from "sweetalert2";
-import { getUserId, getWishlistMovie } from "../../api/userApi";
+import {
+  getUserId,
+  getWishlistMovie,
+  removeFromWishList,
+} from "../../api/userApi";
 import Header from "../../components/header/Header";
 import { Link } from "react-router-dom";
 import { removeMovie } from "../../redux/action";
+import { MOVIE_DB_IMAGE_URL } from "../../constant/inde";
+import "../../style/movie.css";
 
 const WishListMovie = () => {
   const [wishlist, setWishlist] = useState([]);
+  const [removeList, setRemoveList] = useState([]);
   const [userId, setUserId] = useState("");
   const [movieId, setMovieId] = useState("");
-  const currentUser = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  const token = localStorage.getItem("token");
 
   useEffect(() => {
     fetchWishlistMovie();
@@ -26,7 +30,9 @@ const WishListMovie = () => {
     try {
       const wishlistMovies = await getWishlistMovie();
       setWishlist(wishlistMovies.data);
-    } catch (err) {}
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const removeItem = async (id) => {
@@ -44,17 +50,43 @@ const WishListMovie = () => {
     });
   };
 
+  const handleCheck = (event) => {
+    let updatedList = [...removeList];
+    if (event.target.checked) {
+      updatedList = [...removeList, event.target.value];
+    } else {
+      updatedList.splice(removeList.indexOf(event.target.value), 1);
+    }
+    setRemoveList(updatedList);
+  };
+
   async function setRemoveMovie(id) {
+    let updatedList = [...removeList];
+    updatedList = [...removeList, id];
+
+    await removeMovies(updatedList);
+    setMovieId(id);
+  }
+
+  function removeAllItem() {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to remove all this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      confirmButtonText: "Remove",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        removeMovies(removeList);
+        window.location.reload(true);
+      }
+    });
+  }
+
+  async function removeMovies(updatedList) {
     try {
-      await axios.delete(
-        `${process.env.REACT_APP_API_BASE_URL}/movie/remove?userId=${userId}&movieId=${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      setMovieId(id);
+      await removeFromWishList(updatedList, userId);
       dispatch(removeMovie("The item is removed"));
     } catch (err) {
       console.error(err);
@@ -63,9 +95,19 @@ const WishListMovie = () => {
 
   return (
     <div>
-      <Header id={movieId} />
-      <h1>WishList</h1>
+      <Header id={movieId} wishlist={wishlist} />
       <div className="container">
+        <div>
+          <h1>WishList</h1>
+          {wishlist.length > 0 && (
+            <button
+              className="remove-btn btn btn-danger mb-2"
+              onClick={() => removeAllItem()}
+            >
+              Remove Selected
+            </button>
+          )}
+        </div>
         {wishlist.length == 0 && <div>Empty</div>}
         {wishlist.map((wish, key) => {
           return (
@@ -75,14 +117,19 @@ const WishListMovie = () => {
                   <input
                     class="form-check-input mt-4"
                     type="checkbox"
-                    value=""
+                    value={wish.movieId}
                     id="flexCheckDefault"
+                    onChange={(e) => handleCheck(e)}
                   />
                 </div>
 
                 <div className="col-md-3">
                   <Link to={`/movie/${wish.movieId}`} className="movie-item">
-                    <img src={wish.imgUrl} width={70} style={{ padding: 10 }} />
+                    <img
+                      src={`${MOVIE_DB_IMAGE_URL}/${wish.imgUrl}`}
+                      width={70}
+                      className="p-1"
+                    />
                   </Link>
                 </div>
                 <div className="col-md-6">

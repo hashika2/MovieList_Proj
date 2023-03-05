@@ -1,16 +1,13 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
 import { Navigate, useLocation } from "react-router-dom";
 import Login from "../pages/auth/Login";
 
 export default function AuthGuard({ children }) {
-  const currentUser = useSelector((state) => state.auth);
-  const { isAuthenticated } = currentUser;
-  const isAuth = localStorage.getItem("isAuthenticated");
+  const token = localStorage.getItem("token");
   const { pathname } = useLocation();
   const [requestedLocation, setRequestedLocation] = useState("");
 
-  if (!isAuth) {
+  if (!token) {
     if (pathname !== requestedLocation) {
       setRequestedLocation(pathname);
     }

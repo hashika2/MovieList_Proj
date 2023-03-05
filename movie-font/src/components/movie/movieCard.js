@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "../../style/movie.css";
 import { getuPularMovie } from "../../api/filterApi";
+import { MOVIE_DB_IMAGE_URL } from "../../constant/inde";
 
 const MovieCard = (info) => {
   const [movies, setMovies] = useState([]);
-  const [isNewMovie, setIsNewMovie] = useState(false);
 
   useEffect(() => {
     getMovieDatails();
@@ -29,9 +29,9 @@ const MovieCard = (info) => {
             <div className="movie-card card ml-2" key={key}>
               <Link to={`/movie/${mv.id}`} className="movie-item">
                 <img
-                  className="card-img-top"
-                  src="https://www.themoviedb.org/t/p/w220_and_h330_face/130H1gap9lFfiTF9iDrqNIkFvC9.jpg"
+                  src={`${MOVIE_DB_IMAGE_URL}/${mv.poster_path}`}
                   alt="Card image cap"
+                  class="img-fluid rounded-3"
                 />
                 <div className="card-body">
                   <h5 className="card-title">{mv.title}</h5>

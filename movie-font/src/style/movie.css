@@ -14,9 +14,16 @@
   height: 30px;
 }
 
+.wishlist-bn {
+  float: "right";
+}
+
 .movie-item {
   text-decoration: none;
   color: black;
+}
+.movie-item img {
+  width: 130px;
 }
 
 .tb-cl-1 {
@@ -37,4 +44,12 @@
 
 .tb-cl-1 {
   width: 20%;
+}
+
+.remove-btn {
+  float: right;
+}
+
+.nav-bar {
+  display: flex;
 }

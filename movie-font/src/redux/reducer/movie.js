@@ -1,3 +1,5 @@
+import { Types } from "../types";
+
 const initialesState = {
   data: null,
   isAdded: false,
@@ -6,13 +8,13 @@ const initialesState = {
 
 export default function (state = initialesState, action) {
   switch (action.type) {
-    case "MOVIE_ADDED":
+    case Types.MOVIE_ADDED:
       return {
         ...state,
         data: action.payload,
         isAdded: true,
       };
-    case "MOVIE_REMOVED":
+    case Types.MOVIE_REMOVED:
       return {
         ...state,
         data: action.payload,

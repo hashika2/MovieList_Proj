@@ -14,21 +14,21 @@ import { JwtAuthGuard } from './guards/jwt-auth.guard';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService) { }
 
   @Post('/signup')
-  async signUp(@Body() user: userDTO): Promise<any> {
+  async signUp(@Body() user: userDTO) {
     return this.authService.signUp(user);
   }
 
   @Post('signin')
-  async login(@Body() loginDTO: LoginDTO): Promise<any> {
+  async login(@Body() loginDTO: LoginDTO) {
     return this.authService.login(loginDTO);
   }
 
   @Get('/user')
   @UseGuards(JwtAuthGuard)
-  async userId(@Req() request: Request): Promise<any> {
+  async userId(@Req() request: Request) {
     return this.authService.getuserId(request);
   }
 }

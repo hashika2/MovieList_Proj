@@ -1,16 +1,14 @@
-import Header from "../../components/header/Header";
 import React, { useEffect, useState } from "react";
 import {
   getGenres,
-  getRating,
   getRatingMovie,
   getyearWiseMovie,
   searchMovie,
 } from "../../api/filterApi";
 import SearchForm from "../../components/forms/SearchForm";
-import MovieCard from "../../components/movie/movieCard";
 import MovieTable from "../../components/movie/MovieTable";
 import Pagin from "../../components/movie/pagination";
+import Header from "../../components/header/Header";
 
 const MovieList = () => {
   const [page, setPage] = useState(1);
@@ -22,11 +20,9 @@ const MovieList = () => {
   const [rating, setRating] = useState([]);
   const [movie, setMovie] = useState("");
   const [movies, setMovies] = useState([]);
-  const [isChange, setIsChange] = useState(false);
 
   useEffect(() => {
     fetchGenres();
-    // fetchRatingMovie();
     searchFilterData();
     setRatings(getRatingMovie());
     setYear(getyearWiseMovie());
@@ -37,11 +33,6 @@ const MovieList = () => {
     setGenreses(genRes.data?.genres);
   };
 
-  const fetchRatingMovie = async () => {
-    const gratingRes = await getRating();
-    setRating(gratingRes.data?.results);
-  };
-
   const onSubmit = async (e) => {
     e.preventDefault();
     searchFilterData();
@@ -50,7 +41,6 @@ const MovieList = () => {
   const searchFilterData = async () => {
     const searchRes = await searchMovie(movie, page);
     setMovies(searchRes.data?.results);
-    // setPage(searchRes.data?.total_pages);
     setTotalPage(searchRes.data?.total_pages);
   };
 
@@ -61,6 +51,7 @@ const MovieList = () => {
         <SearchForm
           onSubmit={onSubmit}
           setMovie={setMovie}
+          movie={movie}
           genreses={genreses}
           setGenres={setGenres}
           genres={genres}
@@ -78,7 +69,6 @@ const MovieList = () => {
         />
         <Pagin page={page} tatalPage={totalPage} setPage={setPage} />
       </div>
-      {/* <Pagin /> */}
     </div>
   );
 };
