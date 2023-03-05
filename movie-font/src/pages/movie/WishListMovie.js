@@ -11,16 +11,18 @@ import Header from "../../components/header/Header";
 import { Link } from "react-router-dom";
 import { removeMovie } from "../../redux/action";
 import { MOVIE_DB_IMAGE_URL } from "../../constant/inde";
+import "../../style/movie.css";
 
 const WishListMovie = () => {
   const [wishlist, setWishlist] = useState([]);
+  const [removeList, setRemoveList] = useState([]);
   const [userId, setUserId] = useState("");
   const [movieId, setMovieId] = useState("");
   const dispatch = useDispatch();
 
   useEffect(() => {
     fetchWishlistMovie();
-  }, [movieId]);
+  }, [movieId, wishlist]);
 
   const fetchWishlistMovie = async () => {
     const userData = await getUserId();
@@ -48,10 +50,42 @@ const WishListMovie = () => {
     });
   };
 
+  const handleCheck = (event) => {
+    let updatedList = [...removeList];
+    if (event.target.checked) {
+      updatedList = [...removeList, event.target.value];
+    } else {
+      updatedList.splice(removeList.indexOf(event.target.value), 1);
+    }
+    setRemoveList(updatedList);
+  };
+
   async function setRemoveMovie(id) {
+    let updatedList = [...removeList];
+    updatedList = [...removeList, id];
+
+    await removeMovies(updatedList);
+    setMovieId(id);
+  }
+
+  function removeAllItem() {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to remove all this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      confirmButtonText: "Remove",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        removeMovies(removeList);
+      }
+    });
+  }
+
+  async function removeMovies(updatedList) {
     try {
-      await removeFromWishList(userId, id);
-      setMovieId(id);
+      await removeFromWishList(updatedList, userId);
       dispatch(removeMovie("The item is removed"));
     } catch (err) {
       console.error(err);
@@ -60,11 +94,17 @@ const WishListMovie = () => {
 
   return (
     <div>
-      <Header id={movieId} />
-      <div style={{ display: "flex" }}>
-        <h1>WishList</h1> <button>Remove Selected</button>
-      </div>
+      <Header id={movieId} wishlist={wishlist} />
       <div className="container">
+        <div>
+          <h1>WishList</h1>
+          <button
+            className="remove-btn btn btn-danger mb-2"
+            onClick={() => removeAllItem()}
+          >
+            Remove Selected
+          </button>
+        </div>
         {wishlist.length == 0 && <div>Empty</div>}
         {wishlist.map((wish, key) => {
           return (
@@ -74,8 +114,9 @@ const WishListMovie = () => {
                   <input
                     class="form-check-input mt-4"
                     type="checkbox"
-                    value=""
+                    value={wish.movieId}
                     id="flexCheckDefault"
+                    onChange={(e) => handleCheck(e)}
                   />
                 </div>
 

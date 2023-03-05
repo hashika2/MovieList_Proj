@@ -11,7 +11,7 @@ import {
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiQuery } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
-import { MoviewDTO } from './movie.model';
+import { MovieIdsDTO, MoviewDTO } from './movie.model';
 import { MovieService } from './movie.service';
 import { Request } from 'express';
 
@@ -30,18 +30,9 @@ export class MovieController {
     return this.movieService.add(movie);
   }
 
-  @Delete('/remove')
-  @ApiQuery({
-    name: 'userId',
-    required: true,
-    type: String,
-  })
-  @ApiQuery({
-    name: 'movieId',
-    required: true,
-    type: String,
-  })
-  async remove(@Query() params: any) {
-    return this.movieService.remove(params);
+  @Post('/remove')
+  async remove(@Body() movieIds: MovieIdsDTO, @Req() request: Request) {
+    console.log(movieIds);
+    return this.movieService.remove(movieIds, request);
   }
 }

@@ -45,3 +45,11 @@
 .tb-cl-1 {
   width: 20%;
 }
+
+.remove-btn {
+  float: right;
+}
+
+.nav-bar {
+  display: flex;
+}

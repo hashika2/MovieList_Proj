@@ -3,15 +3,16 @@ import { Link, useNavigate } from "react-router-dom";
 import { BsBookmark, BsFillPersonFill } from "react-icons/bs";
 import Badge from "react-bootstrap/Badge";
 import { getWishlistMovie } from "../../api/userApi";
+import "../../style/movie.css";
 
-const Header = ({ isAdd, id }) => {
+const Header = ({ isAdd, id, wishlist }) => {
   const [count, setCount] = useState(0);
   const isAuth = localStorage.getItem("isAuthenticated");
   const navigate = useNavigate();
 
   useEffect(() => {
     wishlistCount();
-  }, [isAdd, id]);
+  }, [isAdd, id, wishlist]);
 
   async function wishlistCount() {
     const wishlist = await getWishlistMovie();
@@ -21,7 +22,9 @@ const Header = ({ isAdd, id }) => {
   function logout() {
     localStorage.clear();
     navigate("/login");
+    window.location.reload(true);
   }
+
   return (
     <nav className="navbar navbar-light bg-light">
       <div className="container-fluid">
@@ -29,7 +32,7 @@ const Header = ({ isAdd, id }) => {
           My Movie App
         </Link>
         {isAuth ? (
-          <div style={{ display: "flex" }}>
+          <div className="nav-bar">
             <Link className="navbar-brand" to="/wishlist">
               <Badge bg="danger">{count}</Badge>
               <BsBookmark />
