@@ -15,7 +15,7 @@ import { MovieService } from './movie.service';
 @UseGuards(JwtAuthGuard)
 @Controller('movie')
 export class MovieController {
-  constructor(private movieService: MovieService) { }
+  constructor(private movieService: MovieService) {}
 
   @Get('/')
   async get(@Req() request: Request) {

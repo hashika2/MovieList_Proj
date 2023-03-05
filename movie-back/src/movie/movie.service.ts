@@ -11,7 +11,7 @@ export class MovieService {
     @InjectRepository(Movie)
     private movieRepository: Repository<Movie>,
     private authService: AuthService,
-  ) { }
+  ) {}
 
   async add(movie): Promise<Movie[]> {
     const { movieId, userId } = movie;
