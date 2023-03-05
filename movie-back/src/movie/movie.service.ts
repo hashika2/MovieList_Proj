@@ -25,7 +25,6 @@ export class MovieService {
   }
 
   async remove(ids, request): Promise<any> {
-    console.log(ids);
     const user = await this.authService.getuserId(request);
     const movieIds = ids.movieIds;
     const userId = user.id;
