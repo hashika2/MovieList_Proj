@@ -47,8 +47,10 @@ export const getWishlistMovie = () => {
 };
 
 export const removeFromWishList = (movieIds) => {
-  return userClient.post(`movie/remove`, {
-    movieIds,
+  return userClient.delete(`movie/remove`, {
+    data: {
+      movieIds,
+    },
   });
 };
 

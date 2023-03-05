@@ -3,17 +3,14 @@ import {
   Controller,
   Delete,
   Get,
-  Param,
   Post,
-  Query,
   Req,
   UseGuards,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiQuery } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { Request } from 'express';
 import { MovieIdsDTO, MoviewDTO } from './movie.model';
 import { MovieService } from './movie.service';
-import { Request } from 'express';
 
 @UseGuards(JwtAuthGuard)
 @Controller('movie')
@@ -30,9 +27,8 @@ export class MovieController {
     return this.movieService.add(movie);
   }
 
-  @Post('/remove')
+  @Delete('/remove')
   async remove(@Body() movieIds: MovieIdsDTO, @Req() request: Request) {
-    console.log(movieIds);
     return this.movieService.remove(movieIds, request);
   }
 }

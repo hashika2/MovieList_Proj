@@ -50,7 +50,9 @@ const Login = () => {
                       onChange={(e) => setEmail(e.target.value)}
                       value={email}
                     />
-                    <label for="floatingInput">Email address</label>
+                    <label for="floatingInput" htmlFor="email">
+                      Email address
+                    </label>
                   </div>
                   <div class="form-floating">
                     <input
@@ -61,7 +63,9 @@ const Login = () => {
                       onChange={(e) => setPassword(e.target.value)}
                       value={password}
                     />
-                    <label for="floatingPassword">Password</label>
+                    <label for="floatingPassword" htmlFor="email">
+                      Password
+                    </label>
                   </div>
 
                   <div className="form-check d-flex justify-content-start mb-4 mt-4">
