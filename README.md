@@ -61,28 +61,17 @@ Install the npm package:
 
 npm install typeorm  mysql2 --save
 
-import { DataSource } from 'typeorm';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 database connection
 
-export const databaseProviders = [
-  {
-    provide: 'DATA_SOURCE',
-    useFactory: async () => {
-      const dataSource = new DataSource({
-        type: 'mysql',
-        host: 'localhost',
-        port: 3306,
-        username: 'root',
-        password: 'root',
-        database: 'test',
-        entities: [
-            __dirname + '/../**/*.entity{.ts,.js}',
-        ],
-        synchronize: true,
-      });
-
-      return dataSource.initialize();
-    },
-  },
-];
+TypeOrmModule.forRoot({
+      type: 'mysql',
+      host: 'localhost',
+      port: 3306,
+      username: 'root',
+      password: 'admin',
+      database: 'movie',
+      entities: entities,
+      synchronize: true,
+ }),
