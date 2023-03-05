@@ -6,7 +6,6 @@ import { MOVIE_DB_IMAGE_URL } from "../../constant/inde";
 
 const MovieTable = ({ genres, moviesInfo, inputMovie, page, setTotalPage }) => {
   const [movies, setMovies] = useState([]);
-  const [isNewMovie, setIsNewMovie] = useState(false);
 
   useEffect(() => {
     getMovieDatails();
@@ -85,8 +84,6 @@ const MovieTable = ({ genres, moviesInfo, inputMovie, page, setTotalPage }) => {
                   </tr>
                 );
               })}
-
-              <br />
             </tbody>
           </table>
         </div>

@@ -1,4 +1,3 @@
-import Header from "../../components/header/Header";
 import React, { useEffect, useState } from "react";
 import {
   getGenres,
@@ -9,6 +8,7 @@ import {
 import SearchForm from "../../components/forms/SearchForm";
 import MovieTable from "../../components/movie/MovieTable";
 import Pagin from "../../components/movie/pagination";
+import Header from "../../components/header/Header";
 
 const MovieList = () => {
   const [page, setPage] = useState(1);
@@ -41,7 +41,6 @@ const MovieList = () => {
   const searchFilterData = async () => {
     const searchRes = await searchMovie(movie, page);
     setMovies(searchRes.data?.results);
-    // setPage(searchRes.data?.total_pages);
     setTotalPage(searchRes.data?.total_pages);
   };
 
@@ -52,6 +51,7 @@ const MovieList = () => {
         <SearchForm
           onSubmit={onSubmit}
           setMovie={setMovie}
+          movie={movie}
           genreses={genreses}
           setGenres={setGenres}
           genres={genres}

@@ -1,6 +1,7 @@
 const SearchForm = ({
   onSubmit,
   setMovie,
+  movie,
   genreses,
   setGenres,
   genres,
@@ -20,6 +21,7 @@ const SearchForm = ({
               aria-label="Search"
               aria-describedby="search-addon"
               onChange={(e) => setMovie(e.target.value)}
+              value={movie}
             />
             <input
               type="submit"
@@ -49,6 +51,7 @@ const SearchForm = ({
                     {genreses.map((genres, key) => {
                       return (
                         <button
+                          key={key}
                           class="dropdown-item"
                           onClick={() => {
                             setGenres(genres.name);

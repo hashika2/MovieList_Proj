@@ -28,7 +28,9 @@ const WishListMovie = () => {
     try {
       const wishlistMovies = await getWishlistMovie();
       setWishlist(wishlistMovies.data);
-    } catch (err) {}
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const removeItem = async (id) => {

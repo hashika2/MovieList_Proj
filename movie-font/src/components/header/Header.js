@@ -34,9 +34,9 @@ const Header = ({ isAdd, id }) => {
               <Badge bg="danger">{count}</Badge>
               <BsBookmark />
             </Link>
-            <div class="dropdown">
+            <div className="dropdown">
               <button
-                class="btn btn-primary dropdown-toggle"
+                className="btn btn-primary dropdown-toggle"
                 type="button"
                 id="dropdownMenuButton"
                 data-toggle="dropdown"
@@ -45,7 +45,10 @@ const Header = ({ isAdd, id }) => {
               >
                 <BsFillPersonFill />
               </button>
-              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <div
+                className="dropdown-menu"
+                aria-labelledby="dropdownMenuButton"
+              >
                 <Link className="dropdown-item" to="#">
                   Profile
                 </Link>

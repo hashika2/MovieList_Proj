@@ -1,7 +1,7 @@
-import axios from "axios";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import Notiflix from "notiflix";
 import { userRegister } from "../../api/userApi";
 import { registerUser } from "../../redux/action";
 
@@ -17,17 +17,17 @@ const Register = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    if (password === confirmPassword) {
-      const registerData = await userRegister(
-        firstName,
-        lastName,
-        email,
-        password
-      );
-      dispatch(registerUser(registerData.data));
-    } else {
-      console.log("passowrd are not matched");
+    if (password !== confirmPassword) {
+      Notiflix.Notify.failure("passowrd are not matched");
+      return;
     }
+    const registerData = await userRegister(
+      firstName,
+      lastName,
+      email,
+      password
+    );
+    dispatch(registerUser(registerData.data));
   };
 
   //need to change

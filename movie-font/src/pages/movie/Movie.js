@@ -1,4 +1,3 @@
-import Header from "../../components/header/Header";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -9,6 +8,7 @@ import { addToWishList, getUserId } from "../../api/userApi";
 import Loader from "../../components/common/Loader";
 import { MOVIE_DB_IMAGE_URL } from "../../constant/inde";
 import { getMovieInfo } from "../../api/filterApi";
+import Header from "../../components/header/Header";
 import "../../style/movie.css";
 
 const Movie = () => {
