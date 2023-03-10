@@ -10,13 +10,13 @@ async function bootstrap() {
   app.enableCors();
 
   // Validations
-  // app.useGlobalPipes(
-  //   new ValidationPipe({
-  //     validationError: {
-  //       target: false,
-  //       value: false,
-  //     },
-  //   }),
-  // );
+  app.useGlobalPipes(
+    new ValidationPipe({
+      validationError: {
+        target: false,
+        value: false,
+      },
+    }),
+  );
 }
 bootstrap();

@@ -8,6 +8,7 @@ const SearchForm = ({
   ratings,
   setRating,
   years,
+  dropDownSearch,
 }) => {
   return (
     <>
@@ -21,7 +22,7 @@ const SearchForm = ({
               aria-label="Search"
               aria-describedby="search-addon"
               onChange={(e) => setMovie(e.target.value)}
-              value={movie}
+              // value={movie}
             />
             <input
               type="submit"
@@ -53,10 +54,11 @@ const SearchForm = ({
                         <button
                           key={key}
                           class="dropdown-item"
-                          onClick={() => {
-                            setGenres(genres.name);
-                            setMovie(genres.name);
-                          }}
+                          // onClick={() => {
+                          //   setGenres(genres.name);
+                          //   setMovie(genres.name);
+                          // }}
+                          onClick={() => dropDownSearch(genres.id, genres.name)}
                         >
                           {genres.name}
                         </button>
@@ -70,6 +72,7 @@ const SearchForm = ({
                   aria-label="Text input with dropdown button"
                   value={genres}
                   name="genres"
+                  onChange={(e) => console.log(e.target.value)}
                 />
               </div>
             </div>
@@ -90,7 +93,7 @@ const SearchForm = ({
                     class="dropdown-menu"
                     aria-labelledby="dropdownMenuButton"
                   >
-                    {ratings.map((rating, key) => {
+                    {ratings.map((rating) => {
                       return (
                         <button
                           class="dropdown-item"
@@ -127,7 +130,7 @@ const SearchForm = ({
                   Year
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  {years.map((year, key) => {
+                  {years.map((year) => {
                     return (
                       <button class="dropdown-item" href="#">
                         {year}
@@ -151,7 +154,7 @@ const SearchForm = ({
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                   <a class="dropdown-item" href="#">
-                    Action
+                    ASC
                   </a>
                 </div>
               </div>

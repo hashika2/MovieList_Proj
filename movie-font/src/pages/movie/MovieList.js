@@ -4,6 +4,7 @@ import {
   getRatingMovie,
   getyearWiseMovie,
   searchMovie,
+  searchMovieFromDiscover,
 } from "../../api/filterApi";
 import SearchForm from "../../components/forms/SearchForm";
 import MovieTable from "../../components/movie/MovieTable";
@@ -26,7 +27,7 @@ const MovieList = () => {
     searchFilterData();
     setRatings(getRatingMovie());
     setYear(getyearWiseMovie());
-  }, [genres, page]);
+  }, [page]);
 
   const fetchGenres = async () => {
     const genRes = await getGenres();
@@ -44,6 +45,14 @@ const MovieList = () => {
     setTotalPage(searchRes.data?.total_pages);
   };
 
+  const dropDownSearch = async (id, name) => {
+    const searchResFromDiscover = await searchMovieFromDiscover(id, page);
+    setGenres(name);
+    setMovie(name);
+    setMovies(searchResFromDiscover.data?.results);
+    setTotalPage(searchResFromDiscover.data?.total_pages);
+  };
+
   return (
     <div>
       <Header />
@@ -58,6 +67,7 @@ const MovieList = () => {
           ratings={ratings}
           setRating={setRating}
           years={years}
+          dropDownSearch={dropDownSearch}
         />
         {/* <MovieCard page={page} movies={movies} inputMovie={movie} /> */}
         <MovieTable

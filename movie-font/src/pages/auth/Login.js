@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Notiflix from "notiflix";
 import { userLogin } from "../../api/userApi";
 import { loginUser } from "../../redux/action";
 
@@ -19,7 +20,9 @@ const Login = () => {
         localStorage.setItem("token", logingData.data.access_token);
         dispatch(loginUser(logingData.data));
       }
-    } catch (err) {}
+    } catch (err) {
+      Notiflix.Notify.failure(err?.response?.data?.message);
+    }
   };
 
   //need to change
@@ -86,6 +89,16 @@ const Login = () => {
                   >
                     Login
                   </button>
+                  <p>
+                    Don't have an account ?
+                    <Link
+                      to="/register"
+                      className="font-weight-medium text-primary"
+                    >
+                      {" "}
+                      Signup
+                    </Link>
+                  </p>
                 </div>
               </form>
             </div>

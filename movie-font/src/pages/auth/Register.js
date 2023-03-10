@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Notiflix from "notiflix";
 import { userRegister } from "../../api/userApi";
 import { registerUser } from "../../redux/action";
@@ -110,6 +110,16 @@ const Register = () => {
                   >
                     Register
                   </button>
+                  <p>
+                    You have an account ?
+                    <Link
+                      to="/login"
+                      className="font-weight-medium text-primary"
+                    >
+                      {" "}
+                      Signin{" "}
+                    </Link>{" "}
+                  </p>
                 </div>
               </form>
             </div>

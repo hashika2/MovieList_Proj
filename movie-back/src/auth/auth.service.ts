@@ -13,13 +13,13 @@ export class AuthService {
     @InjectRepository(User)
     private usersRepository: Repository<User>,
     private jwtService: JwtService,
-  ) {}
+  ) { }
 
   async findAll(): Promise<User[]> {
     return this.usersRepository.find();
   }
 
-  async signUp(userDto: userDTO): Promise<any> {
+  async signUp(userDto: userDTO): Promise<User> {
     const { password, email } = userDto;
     //check the email
     const user = await this.usersRepository.findOne({ where: { email } });
@@ -46,7 +46,6 @@ export class AuthService {
         access_token: this.jwtService.sign(payload, {
           secret: jwtConstants.secret,
         }),
-        userId: user.id,
         username: user.firstName,
         type: 'Bearer',
         expiresIn: '7200s',

@@ -18,6 +18,12 @@ export const searchMovie = (movie, page) => {
   );
 };
 
+export const searchMovieFromDiscover = (movieId, page) => {
+  return axios.get(
+    `${process.env.REACT_APP_REST_API_BASE_URL}/3/discover/movie?api_key=${process.env.REACT_APP_API_KEY}&page=${page}&with_genres=${movieId}`
+  );
+};
+
 export const getuPularMovie = (page) => {
   return axios.get(
     `${process.env.REACT_APP_REST_API_BASE_URL}/3/movie/popular?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=${page}`
