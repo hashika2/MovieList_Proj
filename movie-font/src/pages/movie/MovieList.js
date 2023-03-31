@@ -69,7 +69,7 @@ const MovieList = () => {
           years={years}
           dropDownSearch={dropDownSearch}
         />
-        {/* <MovieCard page={page} movies={movies} inputMovie={movie} /> */}
+        <MovieCard page={page} movies={movies} inputMovie={movie} />
         <MovieTable
           genres={genres}
           page={page}
