@@ -9,6 +9,7 @@ import SearchForm from "../../components/forms/SearchForm";
 import MovieTable from "../../components/movie/MovieTable";
 import Pagin from "../../components/movie/pagination";
 import Header from "../../components/header/Header";
+import { viewPageEvent } from "../../mixpanel/init";
 
 const MovieList = () => {
   const [page, setPage] = useState(1);
@@ -38,6 +39,14 @@ const MovieList = () => {
     searchFilterData();
   };
 
+  const onCLick = async () => {
+    viewPageEvent("Sign Up", {
+      age: 28,
+      gender: "male",
+      source: "facebook",
+    })
+  };
+
   const searchFilterData = async () => {
     const searchRes = await searchMovie(movie, page);
     setMovies(searchRes.data?.results);
@@ -47,6 +56,7 @@ const MovieList = () => {
   return (
     <div>
       <Header />
+      <button onClick={onCLick}> hello</button>
       <div className="container">
         <SearchForm
           onSubmit={onSubmit}

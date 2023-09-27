@@ -5,6 +5,7 @@ import Movie from "../pages/movie/Movie";
 import AuthGuard from "../guards/AuthGuard";
 import Login from "../pages/auth/Login";
 import MovieList from "../pages/movie/MovieList";
+import Dashboard from "../pages/dashboard";
 
 export default function Router() {
   return useRoutes([
@@ -32,6 +33,12 @@ export default function Router() {
         <AuthGuard>
           <WishListMovie />
         </AuthGuard>
+      ),
+    },
+    {
+      path: "/dashboard",
+      element: (
+        <Dashboard />
       ),
     },
   ]);

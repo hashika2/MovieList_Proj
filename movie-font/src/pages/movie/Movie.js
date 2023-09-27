@@ -10,6 +10,7 @@ import { MOVIE_DB_IMAGE_URL } from "../../constant/inde";
 import { getMovieInfo } from "../../api/filterApi";
 import Header from "../../components/header/Header";
 import "../../style/movie.css";
+import { viewPageEvent } from "../../mixpanel/init";
 
 const Movie = () => {
   const { id } = useParams();
@@ -33,6 +34,11 @@ const Movie = () => {
   };
 
   const addWishList = async () => {
+    viewPageEvent("Sign Up", {
+      age: 28,
+      gender: "male",
+      source: "facebook",
+    })
     const userData = await getUserId();
     try {
       const res = await addToWishList(movie, userData);
